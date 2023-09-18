@@ -11,9 +11,15 @@
     </div>
 
     <div>
-      <h1 class="text-[14px] mb-[6px]">
-        {{ product.name }}
-      </h1>
+      <router-link
+        to="/products/1"
+        class="text-[14px] mb-[6px] hover:text-[#27C498]"
+      >
+        <h1>
+          {{ product.name }}
+        </h1>
+      </router-link>
+
       <p class="text-[#979797] text-[12px] my-[6px]">Price</p>
       <p class="text-[#031625] text-[24px] mb-[6px]">${{ product.price }}</p>
     </div>

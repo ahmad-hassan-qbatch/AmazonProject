@@ -12,15 +12,36 @@
         class="mr-[20px]"
         alt="Logo"
       />
-      <img
-        src="../assets/images/profile_picture.png"
-        class="rounded-full"
-        alt="Profile Image"
-      />
+      <div class="relative">
+        <img
+          src="../assets/images/profile_picture.png"
+          class="rounded-full"
+          alt="Profile Image"
+          @click="toggleMenu = !toggleMenu"
+        />
+        <div
+          v-if="toggleMenu"
+          class="absolute rounded-md py-[10px] w-[100px] right-0 bg-white mt-2 flex items-center justify-center shadow-[0px_4px_16px_0px_rgba(0,0,0,0.16)]"
+        >
+          <Button
+            role="primary"
+            styles="w-[75%] hover:bg-white hover:text-[#27C498] text-[12px]"
+            @click="() => user.logout()"
+          >
+            Logout</Button
+          >
+        </div>
+      </div>
     </div>
   </nav>
 </template>
 
 <script setup>
+import Button from "./Button.vue";
 import SearchBar from "./SearchBar.vue";
+import { useUserStore } from "../pinia/store";
+import { ref } from "vue";
+const toggleMenu = ref(false);
+
+const user = useUserStore();
 </script>

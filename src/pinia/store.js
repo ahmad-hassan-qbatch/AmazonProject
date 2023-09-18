@@ -1,49 +1,59 @@
 import api from "../utilities/api.js";
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import router from "../router/index.js";
 
 export const useUserStore = defineStore("user", () => {
-  const id = ref(null);
-  const accessToken = ref(null);
+  const user = ref({});
+  const success = ref(null);
+  const error = ref(null);
+  const loading = ref(false);
 
   const isAuthenticted = () => {
-    return accessToken.value !== null;
+    return localStorage.getItem("accessToken") !== null;
   };
 
-  const removeUserData = () => {
-    id.value = null;
-    accessToken.value = null;
-  };
-  const setUserData = ({ id, accessToken }) => {
-    id.value = id;
-    accessToken.value = accessToken;
-  };
   const getAccessToken = () => {
-    return accessToken.value;
+    return localStorage.getItem("accessToken");
   };
 
   const login = async (username, password) => {
     try {
+      loading.value = true;
       const response = await api.post("/auth/login", {
         username: username,
         password: password,
       });
-      console.log(response.data.token);
+
       if (response.data.token) {
-        setUserData({
-          id: response.data.id,
-          accessToken: response.data.token,
-        });
+        localStorage.setItem("accessToken", response.data.token);
+        user.value = response.data;
       }
-      return response.data;
-    } catch (error) {
-      console.log(error, "new");
-      Promise.reject(error);
+      success.value = "logged in";
+      loading.value = false;
+
+      router.push("/");
+    } catch (err) {
+      error.value = err;
+      loading.value = false;
     }
   };
 
   const logout = () => {
-    removeUserData();
+    user.value = null;
+    localStorage.removeItem("accessToken");
+    success.value = null;
+    error.value = null;
+    router.push("/login");
   };
-  return { id, accessToken, isAuthenticted, logout, login, getAccessToken };
+  return {
+    user,
+    success,
+    error,
+    loading,
+    isAuthenticted,
+    logout,
+    login,
+    getAccessToken,
+  };
 });

@@ -16,8 +16,6 @@ app.use(router);
 
 const user = useUserStore();
 
-console.log(user);
-
 router.beforeEach((to, from, next) => {
   if (to.meta.authRequired) {
     if (user.isAuthenticted()) {
@@ -25,8 +23,14 @@ router.beforeEach((to, from, next) => {
     } else {
       next({ name: "Login" });
     }
+    return;
+  } else if (to.name === "Login") {
+    if (user.isAuthenticted()) {
+      next({ name: "Dashboard" });
+      return;
+    }
+    next();
   }
-  next();
 });
 
 app.mount("#app");

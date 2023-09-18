@@ -18,7 +18,7 @@
         >
           Sign in to your account
         </h1>
-
+        <div v-if="user.error">{{ user.error }}</div>
         <div>
           <label
             for="username"
@@ -58,7 +58,22 @@
             >Forgot password?</a
           >
         </div>
-        <button @click="() => user.login(username, password)">Sign in</button>
+        <Button
+          role="primary"
+          styles="w-full h-12"
+          @click="
+            () => {
+              if (username && password) user.login(username, password);
+            }
+          "
+        >
+          <div v-if="!user.loading" class="flex items-center justify-center">
+            Sign in
+          </div>
+          <div v-else class="flex items-center justify-center">
+            <Loader />
+          </div>
+        </Button>
 
         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
           Don’t have an account yet?
@@ -74,12 +89,13 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 
 import { useUserStore } from "../pinia/store";
-const router = useRouter();
+import Button from "../components/Button.vue";
+import Loader from "../components/Loader.vue";
+
 const username = ref(null);
-const password = ref(null);
+const password = ref("9uQFF1Lh");
 const user = useUserStore();
 </script>
 <style lang=""></style>

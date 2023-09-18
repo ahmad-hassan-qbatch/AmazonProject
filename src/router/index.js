@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Dashboard from "/src/views/DashboardView.vue";
 import Login from "/src/views/LoginPage.vue";
-import Results from "/src/views/ResultsView.vue";
+import ProductDetail from "/src/views/ProductDetails.vue";
+import ProductListings from "/src/views/ProductListings.vue";
 
 const routes = [
   {
@@ -10,7 +11,7 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     meta: {
-      authRequired: false,
+      authRequired: true,
     },
   },
   {
@@ -22,11 +23,19 @@ const routes = [
     },
   },
   {
-    path: "/results",
-    name: "Results",
-    component: Results,
+    path: "/products",
+    name: "Products",
+    component: ProductListings,
     meta: {
-      authRequired: false,
+      authRequired: true,
+    },
+  },
+  {
+    path: "/products/:id",
+    name: "ProductDetail",
+    component: ProductDetail,
+    meta: {
+      authRequired: true,
     },
   },
 ];
