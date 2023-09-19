@@ -27,6 +27,7 @@
       styles="px-[16px] h-[40px] flex items-center"
       @click="
         () => {
+          storeProduct.setFilterParams(null);
           $router.push('/products');
         }
       "
@@ -65,10 +66,12 @@ import { defineProps } from "vue";
 import { vOnClickOutside } from "@vueuse/components";
 import SelectOptions from "./SelectOptions.vue";
 import { useRoute } from "vue-router";
+import { useProductStore } from "../pinia/productStore";
 
 const { showExports } = defineProps({
   showExports: { type: Number, default: 0 },
 });
+const storeProduct = useProductStore();
 
 const router = useRoute();
 const toggleMoreFilter = ref(false);

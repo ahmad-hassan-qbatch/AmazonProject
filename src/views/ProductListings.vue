@@ -4,8 +4,12 @@
     <h1 class="text-[#272B41] text-[24px] font-bold tracking-wide">Results</h1>
     <FilterSection :showExports="showExports" />
   </div>
-  <div v-if="storeProducts.loading === false">
-    <div class="grid grid-cols-4 gap-y-[24px] gap-x-[54px] mt-[24px]">
+
+  <div v-if="storeProducts.loading === false" class="h-[80%]">
+    <div
+      v-if="storeProducts?.products.length"
+      class="grid grid-cols-4 gap-y-[24px] gap-x-[54px] mt-[24px]"
+    >
       <div
         v-for="(product, index) in storeProducts?.products"
         :key="index"
@@ -17,10 +21,13 @@
         />
       </div>
     </div>
+    <div v-else class="flex justify-center items-center bg-transparent h-[80%]">
+      <NotFound />
+    </div>
   </div>
   <div
     v-if="storeProducts.loading"
-    class="flex items-center justify-center h-full"
+    class="flex items-center justify-center h-[80%]"
   >
     <Loader />
   </div>
@@ -33,6 +40,7 @@ import { onMounted, ref, watchEffect } from "vue";
 import { useProductStore } from "../pinia/productStore.js";
 import { useRoute } from "vue-router";
 import Loader from "../components/Loader.vue";
+import NotFound from "../components/NotFound.vue";
 
 const route = useRoute();
 

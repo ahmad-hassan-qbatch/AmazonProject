@@ -32,7 +32,7 @@
 
       <FilterFooter
         :handle-toggle-filter="handleToggleFilter"
-        :handle-apply-filter="handleApplyFilter"
+        :handle-apply-filters="handleApplyFilters"
       />
     </div>
   </div>
@@ -51,7 +51,7 @@ const { handleToggleFilter, category, handleCategoryClick } = defineProps({
 
 const selectedCategory = ref(category);
 
-const handleApplyFilter = () => {
+const handleApplyFilters = () => {
   handleCategoryClick(selectedCategory.value);
   handleToggleFilter();
 };

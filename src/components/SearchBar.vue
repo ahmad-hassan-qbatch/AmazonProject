@@ -59,9 +59,15 @@ const handleToggleFilter = (value) => {
 };
 
 const handleApplyFilters = debounce(() => {
-  router.push({
-    path: "/products",
-    query: { ...storeProduct.getFilterParams(), search: searchInput.value },
-  });
+  if (searchInput.value)
+    router.push({
+      path: "/products",
+      query: { ...storeProduct.getFilterParams(), search: searchInput.value },
+    });
+  else
+    router.push({
+      path: "/products",
+      query: { ...storeProduct.getFilterParams() },
+    });
 }, 700);
 </script>

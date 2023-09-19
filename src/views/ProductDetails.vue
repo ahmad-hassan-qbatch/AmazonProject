@@ -14,15 +14,52 @@
       <h1 class="text-[#272B41] text-[24px] font-bold tracking-wide">
         Additional Details
       </h1>
-      <div class="grid grid-cols-3"></div>
+      <div class="grid grid-cols-3">
+        <button
+          :class="`text-[12px] border-b-2 p-[12px] ${
+            seletedSection === 0
+              ? 'text-[#27C498] border-[#27C498]'
+              : 'text-[#979797] border-[#E1E1E1B2]'
+          }`"
+          @click="seletedSection = 0"
+        >
+          Price History
+        </button>
+        <button
+          :class="`text-[12px] border-b-2 p-[12px] ${
+            seletedSection === 1
+              ? 'text-[#27C498] border-[#27C498]'
+              : 'text-[#979797] border-[#E1E1E1B2]'
+          }`"
+          @click="seletedSection = 1"
+        >
+          Sales History
+        </button>
+        <button
+          :class="`text-[12px] border-b-2 p-[12px] ${
+            seletedSection === 2
+              ? 'text-[#27C498] border-[#27C498]'
+              : 'text-[#979797] border-[#E1E1E1B2]'
+          }`"
+          @click="seletedSection = 2"
+        >
+          Out of Stock History
+        </button>
+      </div>
+      <div v-if="seletedSection == 0">1</div>
+      <div v-if="seletedSection == 1">2</div>
+      <div v-if="seletedSection == 2">3</div>
     </div>
   </div>
 </template>
 
 <script setup>
 import IconBackArrow from "../assets/icons/IconBackArrow.vue";
+import { ref } from "vue";
 import ProductDetailCard from "../components/Cards/ProductDetailCard.vue";
 import ProductActions from "../components/ProductActions.vue";
+
+const seletedSection = ref(0);
 
 const product = {
   name: "Amazon Essentials Men's Short Sleeve Crew neck T-Shirt",

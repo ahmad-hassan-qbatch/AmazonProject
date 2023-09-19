@@ -12,7 +12,7 @@
     <Button
       role="primary"
       styles="py-1 border-[#E3E6EF] px-[16px] text-[white] hover:text-[#27C498] hover:bg-white"
-      @click="handleApplyFilters"
+      @click="() => handleApplyFilters()"
     >
       <span class="text-[14px]">Apply</span>
     </Button>

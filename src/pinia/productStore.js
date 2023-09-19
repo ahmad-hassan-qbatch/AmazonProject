@@ -43,6 +43,9 @@ export const useProductStore = defineStore("Product", () => {
       ...params,
     };
 
+    if (params === null) {
+      return;
+    }
     if (params["weightRange"])
       filterParams.value.weightRange = params["weightRange"]?.split(",");
 
