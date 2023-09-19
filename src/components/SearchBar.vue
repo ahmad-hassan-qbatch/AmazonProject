@@ -20,6 +20,7 @@
 
       <div class="flex w-96">
         <input
+          v-model="searchInput"
           type="text"
           class="text-[#5A5F7D] bg-transparent w-full px-[16px] outline-none"
           placeholder="Search Products, Keywords, or ASINs"
@@ -32,11 +33,22 @@
 
 <script setup>
 import FilterBox from "./SearchFilterBox.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useProductStore } from "../pinia/productStore.js";
 import { vOnClickOutside } from "@vueuse/components";
+import { useRouter } from "vue-router";
+import { debounce } from "lodash";
+
+const router = useRouter();
 
 const category = ref("All");
+const searchInput = ref("");
 const toggleFilter = ref(false);
+const storeProduct = useProductStore();
+
+watch(searchInput, () => {
+  handleApplyFilters();
+});
 
 const handleCategoryClick = (value) => {
   category.value = value;
@@ -45,4 +57,11 @@ const handleCategoryClick = (value) => {
 const handleToggleFilter = (value) => {
   toggleFilter.value = value;
 };
+
+const handleApplyFilters = debounce(() => {
+  router.push({
+    path: "/products",
+    query: { ...storeProduct.getFilterParams(), search: searchInput.value },
+  });
+}, 700);
 </script>

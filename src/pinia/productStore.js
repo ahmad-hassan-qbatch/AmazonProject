@@ -1,6 +1,5 @@
 import api from "../utilities/api.js";
 import { defineStore } from "pinia";
-import { filter } from "lodash";
 import { ref } from "vue";
 import toast from "../utilities/toastMessages.js";
 
@@ -14,7 +13,6 @@ export const useProductStore = defineStore("Product", () => {
   const fetchAllProducts = async (params) => {
     try {
       loading.value = true;
-
       const response = await api.get("/products", {
         params: {
           ...params,
@@ -22,10 +20,9 @@ export const useProductStore = defineStore("Product", () => {
       });
       if (isSuccess(response.status)) {
         products.value = response.data.allProducts;
-        loading.value = false;
       }
+      loading.value = false;
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
       loading.value = false;
     }

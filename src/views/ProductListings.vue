@@ -4,15 +4,25 @@
     <h1 class="text-[#272B41] text-[24px] font-bold tracking-wide">Results</h1>
     <FilterSection :showExports="showExports" />
   </div>
-
-  <div class="grid grid-cols-4 gap-y-[24px] gap-x-[54px] mt-[24px]">
-    <div
-      v-for="(product, index) in storeProducts?.products"
-      :key="index"
-      class="w-[252px]"
-    >
-      <ProductCard :product="product" :handleShowExports="handleShowExports" />
+  <div v-if="storeProducts.loading === false">
+    <div class="grid grid-cols-4 gap-y-[24px] gap-x-[54px] mt-[24px]">
+      <div
+        v-for="(product, index) in storeProducts?.products"
+        :key="index"
+        class="w-[252px]"
+      >
+        <ProductCard
+          :product="product"
+          :handleShowExports="handleShowExports"
+        />
+      </div>
     </div>
+  </div>
+  <div
+    v-if="storeProducts.loading"
+    class="flex items-center justify-center h-full"
+  >
+    <Loader />
   </div>
 </template>
 
@@ -21,8 +31,8 @@ import FilterSection from "../components/FilterSection.vue";
 import ProductCard from "../components/Cards/ProductCard.vue";
 import { onMounted, ref, watchEffect } from "vue";
 import { useProductStore } from "../pinia/productStore.js";
-
 import { useRoute } from "vue-router";
+import Loader from "../components/Loader.vue";
 
 const route = useRoute();
 
@@ -33,7 +43,7 @@ watchEffect(async () => {
   await storeProducts.fetchAllProducts(route.query);
 });
 
-onMounted(() => {
+onMounted(async () => {
   storeProducts.setFilterParams(route.query);
 });
 

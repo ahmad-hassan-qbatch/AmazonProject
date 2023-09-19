@@ -67,7 +67,7 @@
             Sign in
           </div>
           <div v-else class="flex items-center justify-center">
-            <Loader />
+            <IconLoading />
           </div>
         </Button>
 
@@ -88,7 +88,7 @@ import { ref } from "vue";
 
 import { useUserStore } from "../pinia/userStore";
 import Button from "../components/Button.vue";
-import Loader from "../components/Loader.vue";
+import IconLoading from "../assets/icons/IconLoading.vue";
 
 const errors = ref({ email: "", password: "" });
 const email = ref("test@gmail.com");

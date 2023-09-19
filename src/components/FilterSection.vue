@@ -22,6 +22,20 @@
       <span class="text-white ml-[6px]">View More Filters</span>
     </Button>
     <Button
+      v-if="JSON.stringify(router.query).length > 2"
+      role="primary"
+      styles="px-[16px] h-[40px] flex items-center"
+      @click="
+        () => {
+          $router.push('/products');
+        }
+      "
+    >
+      <IconFilter />
+      <span class="text-white ml-[6px]">Clear Filters</span>
+    </Button>
+
+    <Button
       v-if="showExports"
       role="primary"
       styles="px-[16px] h-[40px] flex items-center"
@@ -50,11 +64,13 @@ import IconExports from "../assets/icons/IconExports.vue";
 import { defineProps } from "vue";
 import { vOnClickOutside } from "@vueuse/components";
 import SelectOptions from "./SelectOptions.vue";
+import { useRoute } from "vue-router";
 
 const { showExports } = defineProps({
   showExports: { type: Number, default: 0 },
 });
 
+const router = useRoute();
 const toggleMoreFilter = ref(false);
 
 const handleToggleFilter = (value) => {
