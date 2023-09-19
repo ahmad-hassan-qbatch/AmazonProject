@@ -1,14 +1,16 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <!-- eslint-disable vue/no-mutating-props -->
+
 <template lang="">
   <div class="flex">
     <label class="flex h-[20px] w-[20px] cursor-pointer items-center">
       <input
         type="checkbox"
         class="w-[0px] h-[0px]"
+        :checked="props?.value"
         @input="
           (event) => {
-            handleShowExports(event.target.checked);
+            props.handleChangeCheck(event.target.checked);
           }
         "
       />
@@ -29,7 +31,8 @@
 const props = defineProps({
   label: { type: String, default: "" },
   styles: { type: String, default: "" },
-  handleShowExports: { type: Function, required: false, default: null },
+  value: Boolean,
+  handleChangeCheck: { type: Function, required: false, default: null },
 });
 </script>
 

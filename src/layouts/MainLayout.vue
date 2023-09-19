@@ -1,10 +1,12 @@
 <!-- eslint-disable quotes -->
 <template>
-  <Header />
-  <div class="flex bg-[#F4F4F8]">
-    <SideBar style="flex: 0 0 220px" />
-    <div class="mx-[24px] flex-grow pt-[32px]">
-      <RouterView />
+  <div class="bg-[#F4F4F8] min-h-screen">
+    <Header />
+    <div class="flex bg-[#F4F4F8]">
+      <SideBar style="flex: 0 0 220px" />
+      <div class="mx-[24px] flex-grow pt-[32px]">
+        <RouterView />
+      </div>
     </div>
   </div>
 </template>

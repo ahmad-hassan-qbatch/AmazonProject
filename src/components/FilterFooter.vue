@@ -12,7 +12,7 @@
     <Button
       role="primary"
       styles="py-1 border-[#E3E6EF] px-[16px] text-[white] hover:text-[#27C498] hover:bg-white"
-      @click="handleApplyFilter"
+      @click="handleApplyFilters"
     >
       <span class="text-[14px]">Apply</span>
     </Button>
@@ -21,12 +21,12 @@
 <script setup>
 import Button from "./Button.vue";
 import { defineProps } from "vue";
-const { handleToggleFilter } = defineProps({
+const { handleToggleFilter, handleApplyFilters } = defineProps({
   handleToggleFilter: {
     type: Function,
     required: true,
   },
-  handleApplyFilter: {
+  handleApplyFilters: {
     type: Function,
     default: null,
   },

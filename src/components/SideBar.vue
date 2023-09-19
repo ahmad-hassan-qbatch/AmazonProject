@@ -1,5 +1,5 @@
 <template lang="">
-  <aside class="flex flex-col w-[220px] bg-white">
+  <aside class="flex flex-col w-[220px] bg-white min-h-screen">
     <router-link
       to="/"
       :class="`flex pl-[24px] pt-[16px]  text-[14px] 

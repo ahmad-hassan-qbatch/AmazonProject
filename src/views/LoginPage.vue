@@ -86,7 +86,7 @@
 <script setup>
 import { ref } from "vue";
 
-import { useUserStore } from "../pinia/store";
+import { useUserStore } from "../pinia/userStore";
 import Button from "../components/Button.vue";
 import Loader from "../components/Loader.vue";
 

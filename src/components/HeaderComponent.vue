@@ -39,7 +39,7 @@
 <script setup>
 import Button from "./Button.vue";
 import SearchBar from "./SearchBar.vue";
-import { useUserStore } from "../pinia/store";
+import { useUserStore } from "../pinia/userStore";
 import { ref } from "vue";
 const toggleMenu = ref(false);
 

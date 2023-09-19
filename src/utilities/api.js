@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useUserStore } from "../pinia/store.js";
+import { useUserStore } from "../pinia/userStore.js";
 
 const instance = axios.create({
   baseURL: "http://192.168.2.46:3000/",

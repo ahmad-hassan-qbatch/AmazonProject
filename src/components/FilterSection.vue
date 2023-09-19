@@ -51,11 +51,11 @@ import { defineProps } from "vue";
 import { vOnClickOutside } from "@vueuse/components";
 import SelectOptions from "./SelectOptions.vue";
 
-const toggleMoreFilter = ref(false);
-
 const { showExports } = defineProps({
   showExports: { type: Number, default: 0 },
 });
+
+const toggleMoreFilter = ref(false);
 
 const handleToggleFilter = (value) => {
   toggleMoreFilter.value = value;

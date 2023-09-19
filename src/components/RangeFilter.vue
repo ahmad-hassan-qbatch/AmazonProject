@@ -8,23 +8,53 @@
         type="text"
         class="border border-[#E9E9EA] w-[153px] h-[36px] rounded px-[16px]"
         placeholder="Min"
+        :value="
+          storeProducts?.filterParams[paramsField]
+            ? storeProducts?.filterParams[paramsField][0]
+            : ''
+        "
+        @input="
+          (e) => {
+            storeProducts.handleFiterParamsChange(
+              paramsField,
+              e.target.value,
+              0,
+            );
+          }
+        "
       />
       <input
         type="text"
         class="border border-[#E9E9EA] w-[153px] h-[36px] rounded px-[16px]"
         placeholder="Max"
+        :value="
+          storeProducts?.filterParams[paramsField]
+            ? storeProducts?.filterParams[paramsField][1]
+            : ''
+        "
+        @input="
+          (e) => {
+            storeProducts.handleFiterParamsChange(
+              paramsField,
+              e.target.value,
+              1,
+            );
+          }
+        "
       />
     </div>
   </div>
 </template>
 
 <script setup>
+import { useProductStore } from "../pinia/productStore";
 import { defineProps } from "vue";
 
+const storeProducts = useProductStore();
+
 // eslint-disable-next-line no-unused-vars
-const { title, MinRef, MaxRef } = defineProps({
+const { title, paramsField } = defineProps({
   title: { type: String, required: true },
-  minRef: { type: Number, default: 0, required: false },
-  maxRef: { type: Number, default: 5, required: false },
+  paramsField: { type: String, required: true },
 });
 </script>
