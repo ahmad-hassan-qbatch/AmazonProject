@@ -9,6 +9,9 @@ export const useUserStore = defineStore("user", () => {
   const error = ref(null);
   const loading = ref(false);
 
+  const isSuccess = (status) => {
+    status >= 200 && status <= 299;
+  };
   const isAuthenticted = () => {
     return localStorage.getItem("accessToken") !== null;
   };
@@ -20,17 +23,18 @@ export const useUserStore = defineStore("user", () => {
   const login = async (username, password) => {
     try {
       loading.value = true;
-      const response = await api.post("/auth/login", {
-        username: username,
+      const response = await api.post("/user/login", {
+        email: username,
         password: password,
       });
-
-      if (response.data.token) {
-        localStorage.setItem("accessToken", response.data.token);
-        user.value = response.data;
+      if (isSuccess(response.status)) {
+        if (response.data.token) {
+          localStorage.setItem("accessToken", response.data.token);
+          user.value = response.data.user;
+        }
+        success.value = response.data.message;
+        loading.value = false;
       }
-      success.value = "logged in";
-      loading.value = false;
 
       router.push("/");
     } catch (err) {

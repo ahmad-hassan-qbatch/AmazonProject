@@ -2,7 +2,7 @@ import axios from "axios";
 import { useUserStore } from "../pinia/store.js";
 
 const instance = axios.create({
-  baseURL: "https://dummyjson.com/",
+  baseURL: "http://192.168.2.46:3000/",
   headers: {
     "Content-Type": "application/json",
   },
