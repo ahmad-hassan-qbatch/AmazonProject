@@ -1,23 +1,22 @@
+import Cookies from "js-cookie";
 import api from "../utilities/api.js";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import router from "../router/index.js";
+import toast from "../utilities/toastMessages.js";
 
 export const useUserStore = defineStore("user", () => {
   const user = ref({});
-  const success = ref(null);
-  const error = ref(null);
   const loading = ref(false);
 
-  const isSuccess = (status) => {
-    status >= 200 && status <= 299;
-  };
+  const isSuccess = (status) => status >= 200 && status <= 299;
+
   const isAuthenticted = () => {
-    return localStorage.getItem("accessToken") !== null;
+    return Cookies.get("accessToken") !== undefined;
   };
 
   const getAccessToken = () => {
-    return localStorage.getItem("accessToken");
+    return Cookies.get("accessToken");
   };
 
   const login = async (username, password) => {
@@ -27,33 +26,32 @@ export const useUserStore = defineStore("user", () => {
         email: username,
         password: password,
       });
+
       if (isSuccess(response.status)) {
         if (response.data.token) {
-          localStorage.setItem("accessToken", response.data.token);
+          Cookies.set("accessToken", response.data.token);
           user.value = response.data.user;
         }
-        success.value = response.data.message;
-        loading.value = false;
-      }
 
-      router.push("/");
+        toast.success(response.data.message);
+        loading.value = false;
+        router.push("/");
+      }
     } catch (err) {
-      error.value = err;
+      toast.error(err.response.data.message);
       loading.value = false;
     }
   };
 
   const logout = () => {
     user.value = null;
-    localStorage.removeItem("accessToken");
-    success.value = null;
-    error.value = null;
+    Cookies.remove("accessToken");
+
+    toast.success("Logged Out");
     router.push("/login");
   };
   return {
     user,
-    success,
-    error,
     loading,
     isAuthenticted,
     logout,

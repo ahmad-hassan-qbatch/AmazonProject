@@ -10,6 +10,7 @@
 
 <script setup>
 import { useRoute, RouterView } from "vue-router";
+
 import MainLayout from "./layouts/MainLayout.vue";
 
 const route = useRoute();

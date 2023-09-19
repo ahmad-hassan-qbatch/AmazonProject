@@ -94,8 +94,8 @@ import { useUserStore } from "../pinia/store";
 import Button from "../components/Button.vue";
 import Loader from "../components/Loader.vue";
 
-const username = ref(null);
-const password = ref("9uQFF1Lh");
+const username = ref("test@gmail.com");
+const password = ref("12345");
 const user = useUserStore();
 </script>
 <style lang=""></style>

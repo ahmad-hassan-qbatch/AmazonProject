@@ -1,14 +1,27 @@
 import "./style.css";
+import "vue-toastification/dist/index.css";
 
 import Antd from "ant-design-vue";
 import App from "./App.vue";
+import Toast from "vue-toastification";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import router from "./router";
+import toast from "./utilities/toastMessages";
 import { useUserStore } from "./pinia/store.js";
 
 const pinia = createPinia();
 const app = createApp(App);
+
+app.use(Toast, {
+  transition: "Vue-Toastification__bounce",
+  maxToasts: 20,
+  newestOnTop: true,
+
+  timeout: 5000,
+  pauseOnFocusLoss: true,
+  pauseOnHover: false,
+});
 
 app.use(pinia);
 app.use(Antd);
@@ -21,6 +34,7 @@ router.beforeEach((to, from, next) => {
     if (user.isAuthenticted()) {
       next();
     } else {
+      toast.warning("Please Login To Continue");
       next({ name: "Login" });
     }
     return;
