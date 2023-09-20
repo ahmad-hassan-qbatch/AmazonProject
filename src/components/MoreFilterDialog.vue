@@ -19,7 +19,11 @@ const router = useRouter();
 const storeProducts = useProductStore();
 
 const handleApplyFilters = () => {
-  router.push({ path: "/products", query: storeProducts.getFilterParams() });
+  router.push({
+    path: "/products",
+    query: { ...storeProducts.getFilterParams(), pageNo: 1 },
+  });
+
   handleToggleFilter(false);
 };
 </script>
@@ -54,7 +58,7 @@ const handleApplyFilters = () => {
                 :track-style="{ 'background-color': '#27C498' }"
                 @change="
                   (value) => {
-                    storeProducts.handleFiterParamsChange(
+                    storeProducts.handleFilterParamsChange(
                       'averageReviewRating',
                       value,
                     );
@@ -84,7 +88,7 @@ const handleApplyFilters = () => {
               "
               @input="
                 (e) => {
-                  storeProducts.handleFiterParamsChange(
+                  storeProducts.handleFilterParamsChange(
                     'dimensions',
                     e.target.value,
                     0,
@@ -103,7 +107,7 @@ const handleApplyFilters = () => {
               "
               @input="
                 (e) => {
-                  storeProducts.handleFiterParamsChange(
+                  storeProducts.handleFilterParamsChange(
                     'dimensions',
                     e.target.value,
                     1,
@@ -122,7 +126,7 @@ const handleApplyFilters = () => {
               "
               @input="
                 (e) => {
-                  storeProducts.handleFiterParamsChange(
+                  storeProducts.handleFilterParamsChange(
                     'dimensions',
                     e.target.value,
                     2,
@@ -180,7 +184,7 @@ const handleApplyFilters = () => {
           "
           :handle-change-check="
             (isChecked) => {
-              storeProducts.handleFiterParamsChange('hasVideo', isChecked);
+              storeProducts.handleFilterParamsChange('hasVideo', isChecked);
             }
           "
         />
@@ -196,7 +200,10 @@ const handleApplyFilters = () => {
           "
           :handle-change-check="
             (isChecked) => {
-              storeProducts.handleFiterParamsChange('hasVariations', isChecked);
+              storeProducts.handleFilterParamsChange(
+                'hasVariations',
+                isChecked,
+              );
             }
           "
         />
@@ -213,7 +220,7 @@ const handleApplyFilters = () => {
           "
           :handle-change-check="
             (isChecked) => {
-              storeProducts.handleFiterParamsChange(
+              storeProducts.handleFilterParamsChange(
                 'bulletsThreshold',
                 isChecked,
               );

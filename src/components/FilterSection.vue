@@ -22,7 +22,7 @@ const toggleMoreFilter = ref(false);
 
 const handleToggleFilter = (value) => {
   toggleMoreFilter.value = value;
-  storeProduct.setFilterParams(null);
+  !value && storeProduct.setFilterParams(null);
 };
 </script>
 

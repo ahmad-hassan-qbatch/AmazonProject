@@ -27,7 +27,7 @@ const storeProducts = useProductStore();
         "
         @input="
           (e) => {
-            storeProducts.handleFiterParamsChange(
+            storeProducts.handleFilterParamsChange(
               paramsField,
               e.target.value,
               0,
@@ -46,7 +46,7 @@ const storeProducts = useProductStore();
         "
         @input="
           (e) => {
-            storeProducts.handleFiterParamsChange(
+            storeProducts.handleFilterParamsChange(
               paramsField,
               e.target.value,
               1,

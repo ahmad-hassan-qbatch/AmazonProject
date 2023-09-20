@@ -33,12 +33,16 @@ export const useProductStore = defineStore("Product", () => {
     }
   };
 
-  const handleFiterParamsChange = (field, value, index = null) => {
-    if (index === null) filterParams.value[field] = value;
-    else {
+  const handleFilterParamsChange = (field, value, index = null) => {
+    if (index === null) {
+      value
+        ? (filterParams.value[field] = value)
+        : delete filterParams.value[field];
+    } else {
       if (!filterParams.value[field]) {
         filterParams.value[field] = [];
       }
+
       filterParams.value[field][index] = value || undefined;
     }
   };
@@ -53,7 +57,7 @@ export const useProductStore = defineStore("Product", () => {
       };
       return;
     }
-
+    console.log(params);
     filterParams.value = {
       ...params,
     };
@@ -105,7 +109,7 @@ export const useProductStore = defineStore("Product", () => {
     setFilterParams,
     filterParams,
     totalPages,
-    handleFiterParamsChange,
+    handleFilterParamsChange,
     getFilterParams,
   };
 });

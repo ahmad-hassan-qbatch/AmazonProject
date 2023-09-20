@@ -95,7 +95,7 @@ const handleShowRatingDetails = (value) => {
       </p>
       <p class="text-[14px]">
         in {{ product?.main_category_name }}
-        {{ console.log(product?.bsr, "BSR") }}
+
         <span v-if="product?.bsr <= 100" class="text-[#27C498]">(Top 100)</span>
       </p>
     </div>

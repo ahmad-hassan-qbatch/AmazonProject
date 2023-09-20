@@ -37,7 +37,7 @@ const handleShowExports = (value) => {
   <div v-if="storeProducts.loading === false" class="h-[80%]">
     <div
       v-if="storeProducts?.products.length"
-      class="grid grid-cols-4 gap-y-[24px] gap-x-[54px] mt-[24px]"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-[24px] gap-x-[54px] mt-[24px]"
     >
       <div
         v-for="(product, index) in storeProducts?.products"
