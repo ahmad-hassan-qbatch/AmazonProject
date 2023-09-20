@@ -56,16 +56,16 @@ const handleShowRatingDetails = (value) => {
         to="/products/1"
         class="text-[14px] mb-[6px] hover:text-[#27C498]"
       >
-        <h1 class="max-h-20 overflow-hidden">
+        <p class="line-clamp-2">
           {{ product?.title }}
-        </h1>
+        </p>
       </router-link>
 
-      <p class="text-[#979797] text-[12px] my-[6px]">Price</p>
+      <p class="text-[#979797] text-[12px] my-[6px] font-semibold">Price</p>
       <p class="text-[#031625] text-[24px] mb-[6px]">${{ product?.price }}</p>
     </div>
 
-    <p class="text-[#979797] text-[12px] my-[6px]">Reviews</p>
+    <p class="text-[#979797] text-[12px] my-[6px] font-semibold">Reviews</p>
 
     <div class="flex items-center mb-[6px]">
       <StarComponentVue :earned="product?.reviews" />
@@ -86,7 +86,7 @@ const handleShowRatingDetails = (value) => {
         />
       </div>
     </div>
-    <h2 class="text-[#979797] text-[12px] my-[6px]">BSR</h2>
+    <h2 class="text-[#979797] text-[12px] my-[6px] font-semibold">BSR</h2>
     <div class="flex items-center mb-[16px]">
       <p
         class="flex items-center justify-center text-[12px] text-white bg-[#0FB600] rounded-[2px] px-1 h-[18px] mr-1"
@@ -95,14 +95,17 @@ const handleShowRatingDetails = (value) => {
       </p>
       <p class="text-[14px]">
         in {{ product?.main_category_name }}
-        <span class="text-[#27C498]">(Top {{ product?.bsr }})</span>
+        {{ console.log(product?.bsr, "BSR") }}
+        <span v-if="product?.bsr <= 100" class="text-[#27C498]">(Top 100)</span>
       </p>
     </div>
-    <Button
-      role="secondary"
-      styles="text-[14px] w-full hover:text-white hover:bg-[#27C498]"
-    >
-      View More Details</Button
-    >
+    <router-link to="/products/1">
+      <Button
+        role="secondary"
+        styles="text-[14px] w-full hover:text-white hover:bg-[#27C498]"
+      >
+        View More Details
+      </Button>
+    </router-link>
   </div>
 </template>
