@@ -22,6 +22,7 @@ const toggleMoreFilter = ref(false);
 
 const handleToggleFilter = (value) => {
   toggleMoreFilter.value = value;
+  storeProduct.setFilterParams(null);
 };
 </script>
 
@@ -56,7 +57,10 @@ const handleToggleFilter = (value) => {
       @click="
         () => {
           storeProduct.setFilterParams(null);
-          $router.push('/products');
+          $router.push({
+            path: '/products',
+            query: storeProduct.getFilterParams(),
+          });
         }
       "
     >
