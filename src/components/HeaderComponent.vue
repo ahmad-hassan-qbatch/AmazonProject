@@ -1,3 +1,15 @@
+<script setup>
+import Button from "./Button.vue";
+import SearchBar from "./SearchBar.vue";
+
+import { ref } from "vue";
+import { useUserStore } from "../pinia/userStore";
+
+const toggleMenu = ref(false);
+
+const user = useUserStore();
+</script>
+
 <template lang="">
   <nav class="flex items-center bg-[#161924] h-[68px] px-[24px] w-screen">
     <div class="flex items-center w-full">
@@ -35,13 +47,3 @@
     </div>
   </nav>
 </template>
-
-<script setup>
-import Button from "./Button.vue";
-import SearchBar from "./SearchBar.vue";
-import { useUserStore } from "../pinia/userStore";
-import { ref } from "vue";
-const toggleMenu = ref(false);
-
-const user = useUserStore();
-</script>

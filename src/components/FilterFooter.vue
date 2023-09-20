@@ -1,3 +1,19 @@
+<script setup>
+import Button from "./Button.vue";
+import { defineProps } from "vue";
+
+const { handleToggleFilter, handleApplyFilters } = defineProps({
+  handleToggleFilter: {
+    type: Function,
+    required: true,
+  },
+  handleApplyFilters: {
+    type: Function,
+    default: null,
+  },
+});
+</script>
+
 <template lang="">
   <div
     class="flex justify-end items-center text-black p-[24px] border-t border-[#EEEBEB]"
@@ -18,18 +34,3 @@
     </Button>
   </div>
 </template>
-<script setup>
-import Button from "./Button.vue";
-import { defineProps } from "vue";
-const { handleToggleFilter, handleApplyFilters } = defineProps({
-  handleToggleFilter: {
-    type: Function,
-    required: true,
-  },
-  handleApplyFilters: {
-    type: Function,
-    default: null,
-  },
-});
-</script>
-<style lang=""></style>

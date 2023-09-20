@@ -1,3 +1,32 @@
+<script setup>
+import { ref } from "vue";
+
+import { useUserStore } from "../pinia/userStore";
+import Button from "../components/Button.vue";
+import IconLoading from "../assets/icons/IconLoading.vue";
+
+const errors = ref({ email: "", password: "" });
+const email = ref("test@gmail.com");
+const password = ref("12345");
+const user = useUserStore();
+
+const handleOnSubmit = async () => {
+  if (email.value === "") {
+    errors.value.email = "Email Field is Required";
+  } else delete errors.value?.email;
+
+  if (password.value === "") {
+    errors.value.password = "Password Field is Required";
+  } else delete errors.value?.password;
+
+  if (!Object.keys(errors.value).length) {
+    user.login(email.value, password.value);
+    email.value = "";
+    password.value = "";
+  }
+};
+</script>
+
 <template>
   <div
     class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
@@ -83,32 +112,3 @@
     </div>
   </div>
 </template>
-<script setup>
-import { ref } from "vue";
-
-import { useUserStore } from "../pinia/userStore";
-import Button from "../components/Button.vue";
-import IconLoading from "../assets/icons/IconLoading.vue";
-
-const errors = ref({ email: "", password: "" });
-const email = ref("test@gmail.com");
-const password = ref("12345");
-const user = useUserStore();
-
-const handleOnSubmit = async () => {
-  if (email.value === "") {
-    errors.value.email = "Email Field is Required";
-  } else delete errors.value?.email;
-
-  if (password.value === "") {
-    errors.value.password = "Password Field is Required";
-  } else delete errors.value?.password;
-
-  if (!Object.keys(errors.value).length) {
-    user.login(email.value, password.value);
-    email.value = "";
-    password.value = "";
-  }
-};
-</script>
-<style lang=""></style>

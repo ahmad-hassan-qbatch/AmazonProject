@@ -1,11 +1,13 @@
 import api from "../utilities/api.js";
 import { defineStore } from "pinia";
+import { omit } from "lodash";
 import { ref } from "vue";
 import toast from "../utilities/toastMessages.js";
 
 export const useProductStore = defineStore("Product", () => {
   const products = ref([]);
   const loading = ref(false);
+  const totalPages = ref(0);
   const filterParams = ref({});
 
   const isSuccess = (status) => status >= 200 && status <= 299;
@@ -18,8 +20,11 @@ export const useProductStore = defineStore("Product", () => {
           ...params,
         },
       });
+
       if (isSuccess(response.status)) {
         products.value = response.data.allProducts;
+        console.log(response.data.totalCount);
+        totalPages.value = response.data.totalCount;
       }
       loading.value = false;
     } catch (error) {
@@ -39,6 +44,8 @@ export const useProductStore = defineStore("Product", () => {
   };
 
   const setFilterParams = (params) => {
+    params = omit(params, ["pageNo"]);
+
     filterParams.value = {
       ...params,
     };
@@ -46,6 +53,7 @@ export const useProductStore = defineStore("Product", () => {
     if (params === null) {
       return;
     }
+
     if (params["weightRange"])
       filterParams.value.weightRange = params["weightRange"]?.split(",");
 
@@ -92,6 +100,7 @@ export const useProductStore = defineStore("Product", () => {
     fetchAllProducts,
     setFilterParams,
     filterParams,
+    totalPages,
     handleFiterParamsChange,
     getFilterParams,
   };

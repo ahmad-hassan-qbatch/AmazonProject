@@ -1,3 +1,14 @@
+<script setup>
+import Button from "../Button.vue";
+import RatingProgress from "./RatingProgress.vue";
+import StarComponent from "../StarComponent.vue";
+
+import { defineProps } from "vue";
+import { numberWithCommas } from "../../utilities/helperMethods.js";
+
+const { rating } = defineProps({ rating: { type: Object, required: true } });
+</script>
+
 <template lang="">
   <div
     class="w-[272px] h-[300px] bg-white border broder-[#F1F2F6] rounded-[5px] p-4 flex flex-col items-center justify-center shadow-[0px_4px_16px_0px_rgba(0,0,0,0.16)]"
@@ -31,13 +42,3 @@
     </Button>
   </div>
 </template>
-<script setup>
-import { defineProps } from "vue";
-import StarComponent from "../StarComponent.vue";
-import RatingProgress from "./RatingProgress.vue";
-import Button from "../Button.vue";
-import { numberWithCommas } from "../../utilities/helperMethods.js";
-
-const { rating } = defineProps({ rating: { type: Object, required: true } });
-</script>
-<style lang=""></style>

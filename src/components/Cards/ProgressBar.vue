@@ -1,3 +1,11 @@
+<script setup>
+import { defineProps } from "vue";
+
+const { progress } = defineProps({
+  progress: { type: Number, required: true },
+});
+</script>
+
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -18,11 +26,3 @@
     <rect :width="progress" height="16" rx="3" fill="#FF9900" />
   </svg>
 </template>
-
-<script setup>
-import { defineProps } from "vue";
-
-const { progress } = defineProps({
-  progress: { type: Number, required: true },
-});
-</script>

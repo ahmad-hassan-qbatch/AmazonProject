@@ -1,3 +1,15 @@
+<script setup>
+import { defineProps } from "vue";
+import { useProductStore } from "../pinia/productStore";
+
+const { title, paramsField } = defineProps({
+  title: { type: String, required: true },
+  paramsField: { type: String, required: true },
+});
+
+const storeProducts = useProductStore();
+</script>
+
 <template>
   <div class="mb-[24px]">
     <p class="text-[#979797] text-[12px] font-semibold mb-[6px]">
@@ -5,7 +17,7 @@
     </p>
     <div class="flex justify-between">
       <input
-        type="text"
+        type="number"
         class="border border-[#E9E9EA] w-[153px] h-[36px] rounded px-[16px]"
         placeholder="Min"
         :value="
@@ -24,7 +36,7 @@
         "
       />
       <input
-        type="text"
+        type="number"
         class="border border-[#E9E9EA] w-[153px] h-[36px] rounded px-[16px]"
         placeholder="Max"
         :value="
@@ -45,16 +57,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { useProductStore } from "../pinia/productStore";
-import { defineProps } from "vue";
-
-const storeProducts = useProductStore();
-
-// eslint-disable-next-line no-unused-vars
-const { title, paramsField } = defineProps({
-  title: { type: String, required: true },
-  paramsField: { type: String, required: true },
-});
-</script>

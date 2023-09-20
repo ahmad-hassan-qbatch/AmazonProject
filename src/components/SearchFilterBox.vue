@@ -1,3 +1,23 @@
+<script setup>
+import FilterHeader from "./FilterHeader.vue";
+import FilterFooter from "./FilterFooter.vue";
+import { defineProps, ref } from "vue";
+import categories from "../utilities/categories";
+
+const { handleToggleFilter, category, handleCategoryClick } = defineProps({
+  handleToggleFilter: { type: Function, required: true },
+  handleCategoryClick: { type: Function, required: true },
+  category: { type: String, required: true },
+});
+
+const selectedCategory = ref(category);
+
+const handleApplyFilters = () => {
+  handleCategoryClick(selectedCategory.value);
+  handleToggleFilter();
+};
+</script>
+
 <template lang="">
   <div class="relative">
     <div
@@ -37,25 +57,7 @@
     </div>
   </div>
 </template>
-<script setup>
-import FilterHeader from "./FilterHeader.vue";
-import FilterFooter from "./FilterFooter.vue";
-import { defineProps, ref } from "vue";
-import categories from "../utilities/categories";
 
-const { handleToggleFilter, category, handleCategoryClick } = defineProps({
-  handleToggleFilter: { type: Function, required: true },
-  handleCategoryClick: { type: Function, required: true },
-  category: { type: String, required: true },
-});
-
-const selectedCategory = ref(category);
-
-const handleApplyFilters = () => {
-  handleCategoryClick(selectedCategory.value);
-  handleToggleFilter();
-};
-</script>
 <style scoped>
 .radios {
   grid-template-rows: repeat(8, minmax(0, 1fr));

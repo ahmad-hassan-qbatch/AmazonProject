@@ -1,5 +1,11 @@
-<!-- eslint-disable vue/no-parsing-error -->
-<!-- eslint-disable vue/no-mutating-props -->
+<script setup>
+const { label, styles, value, handleChangeCheck } = defineProps({
+  label: { type: String, default: "" },
+  styles: { type: String, default: "" },
+  value: Boolean,
+  handleChangeCheck: { type: Function, required: false, default: null },
+});
+</script>
 
 <template lang="">
   <div class="flex">
@@ -7,10 +13,10 @@
       <input
         type="checkbox"
         class="w-[0px] h-[0px]"
-        :checked="props?.value"
+        :checked="value"
         @input="
           (event) => {
-            props.handleChangeCheck(event.target.checked);
+            handleChangeCheck(event.target.checked);
           }
         "
       />
@@ -24,17 +30,9 @@
         />
       </span>
     </label>
-    <span class="text-[#031625] text-[14px] ml-[6px]">{{ props.label }}</span>
+    <span class="text-[#031625] text-[14px] ml-[6px]">{{ label }}</span>
   </div>
 </template>
-<script setup>
-const props = defineProps({
-  label: { type: String, default: "" },
-  styles: { type: String, default: "" },
-  value: Boolean,
-  handleChangeCheck: { type: Function, required: false, default: null },
-});
-</script>
 
 <style scoped>
 input:checked ~ .checkmark {

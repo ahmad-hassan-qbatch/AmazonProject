@@ -4,18 +4,14 @@
       <img src="../assets/icons/notFoundIcon.svg" alt="warininig Icon" />
 
       <h1
-        className=" text-2xl font-semibold  md:text-3xl text-gray-800 dark:text-gray-200"
+        className=" text-2xl font-semibold  md:text-3xl text-gray-800 dark:text-gray-200 mt-6"
       >
         Data not Found
       </h1>
 
-      <p className="mt-4 text-gray-800 dark:text-gray-200">
-        The page you are looking for doesn&apos;t exist.
+      <p className="mt-4 text-gray-800 dark:text-gray-200 w-[500px]">
+        Either you typed a wrong URL, or you followed a bad link
       </p>
     </div>
   </section>
 </template>
-<script>
-export default {};
-</script>
-<style lang=""></style>

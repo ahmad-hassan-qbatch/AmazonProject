@@ -1,3 +1,30 @@
+<script setup>
+import Button from "./Button.vue";
+import IconExports from "../assets/icons/IconExports.vue";
+import IconFilter from "../assets/icons/IconFilter.vue";
+import MoreFilterDialog from "./MoreFilterDialog.vue";
+import SelectOptions from "./SelectOptions.vue";
+
+import { defineProps } from "vue";
+import { ref } from "vue";
+import { useProductStore } from "../pinia/productStore";
+import { vOnClickOutside } from "@vueuse/components";
+
+import { omit } from "lodash";
+
+const { showExports } = defineProps({
+  showExports: { type: Number, default: 0 },
+});
+
+const storeProduct = useProductStore();
+
+const toggleMoreFilter = ref(false);
+
+const handleToggleFilter = (value) => {
+  toggleMoreFilter.value = value;
+};
+</script>
+
 <template>
   <div id="buttons" class="flex">
     <div>
@@ -21,8 +48,9 @@
       <IconFilter />
       <span class="text-white ml-[6px]">View More Filters</span>
     </Button>
+
     <Button
-      v-if="JSON.stringify(router.query).length > 2"
+      v-if="JSON.stringify(omit($route.query, ['pageNo'])).length > 2"
       role="primary"
       styles="px-[16px] h-[40px] flex items-center"
       @click="
@@ -56,30 +84,6 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import IconFilter from "../assets/icons/IconFilter.vue";
-import Button from "./Button.vue";
-import MoreFilterDialog from "./MoreFilterDialog.vue";
-import IconExports from "../assets/icons/IconExports.vue";
-import { defineProps } from "vue";
-import { vOnClickOutside } from "@vueuse/components";
-import SelectOptions from "./SelectOptions.vue";
-import { useRoute } from "vue-router";
-import { useProductStore } from "../pinia/productStore";
-
-const { showExports } = defineProps({
-  showExports: { type: Number, default: 0 },
-});
-const storeProduct = useProductStore();
-
-const router = useRoute();
-const toggleMoreFilter = ref(false);
-
-const handleToggleFilter = (value) => {
-  toggleMoreFilter.value = value;
-};
-</script>
 <style scoped>
 select {
   background-image: url("../assets/icons/dropdown.svg");

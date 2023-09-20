@@ -46,10 +46,10 @@ export const useUserStore = defineStore("user", () => {
   const logout = () => {
     user.value = null;
     Cookies.remove("accessToken");
-
     toast.success("Logged Out");
     router.push("/login");
   };
+
   return {
     user,
     loading,

@@ -1,3 +1,13 @@
+<script setup>
+import { defineProps } from "vue";
+
+const { title, styles, options } = defineProps({
+  title: { type: String, default: null, required: false },
+  styles: { type: String, default: "", required: false },
+  options: { type: Array, required: true },
+});
+</script>
+
 <template>
   <p v-if="title" class="text-[#979797] text-[12px] font-semibold mb-[6px]">
     {{ title }}
@@ -11,14 +21,7 @@
     </option>
   </select>
 </template>
-<script setup>
-import { defineProps } from "vue";
-const { title, styles, options } = defineProps({
-  title: { type: String, default: null, required: false },
-  styles: { type: String, default: "", required: false },
-  options: { type: Array, required: true },
-});
-</script>
+
 <style scoped>
 select {
   background-image: url("../assets/icons/dropdown.svg");

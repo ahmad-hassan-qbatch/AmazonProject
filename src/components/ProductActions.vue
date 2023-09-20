@@ -1,3 +1,10 @@
+<script setup>
+import Button from "./Button.vue";
+import IconAmazonLogo from "../assets/icons/IconAmazonLogo.vue";
+import IconHeart from "../assets/icons/IconHeart.vue";
+import IconLocation from "../assets/icons/IconLocation.vue";
+</script>
+
 <template lang="">
   <div id="buttons" class="flex">
     <Button
@@ -26,12 +33,7 @@
     </Button>
   </div>
 </template>
-<script setup>
-import Button from "./Button.vue";
-import IconHeart from "../assets/icons/IconHeart.vue";
-import IconAmazonLogo from "../assets/icons/IconAmazonLogo.vue";
-import IconLocation from "../assets/icons/IconLocation.vue";
-</script>
+
 <style scoped>
 #buttons > * {
   margin-left: 16px;

@@ -1,8 +1,37 @@
-<!-- eslint-disable vue/attribute-hyphenation -->
+<script setup>
+import FilterSection from "../components/FilterSection.vue";
+import ProductCard from "../components/Cards/ProductCard.vue";
+import { ref, watchEffect } from "vue";
+import { useProductStore } from "../pinia/productStore.js";
+import { useRoute } from "vue-router";
+import Loader from "../components/Loader.vue";
+import NotFound from "../components/NotFound.vue";
+import Pagination from "../components/Pagination.vue";
+
+const route = useRoute();
+
+const showExports = ref(0);
+const storeProducts = useProductStore();
+
+watchEffect(async () => {
+  route.query.pageNo === undefined ? 1 : route.query.pageNo;
+  if (route.query.pageNo === undefined ? 1 : route.query.pageNo > 0) {
+    await storeProducts.fetchAllProducts(route.query);
+  }
+  storeProducts.setFilterParams(route.query);
+});
+
+const handleShowExports = (value) => {
+  if (value) {
+    showExports.value += 1;
+  } else showExports.value -= 1;
+};
+</script>
+
 <template lang="">
   <div class="flex items-center justify-between w-full">
     <h1 class="text-[#272B41] text-[24px] font-bold tracking-wide">Results</h1>
-    <FilterSection :showExports="showExports" />
+    <FilterSection :show-exports="showExports" />
   </div>
 
   <div v-if="storeProducts.loading === false" class="h-[80%]">
@@ -17,13 +46,25 @@
       >
         <ProductCard
           :product="product"
-          :handleShowExports="handleShowExports"
+          :handle-show-exports="handleShowExports"
         />
       </div>
     </div>
     <div v-else class="flex justify-center items-center bg-transparent h-[80%]">
       <NotFound />
     </div>
+    <Pagination
+      :current-page="parseInt($route.query.pageNo) || 1"
+      :total-pages="storeProducts.totalPages"
+      :handle-page-no-click="
+        (pageno) => {
+          $router.push({
+            path: '/products',
+            query: { ...storeProducts.getFilterParams(), pageNo: pageno },
+          });
+        }
+      "
+    />
   </div>
   <div
     v-if="storeProducts.loading"
@@ -32,34 +73,3 @@
     <Loader />
   </div>
 </template>
-
-<script setup>
-import FilterSection from "../components/FilterSection.vue";
-import ProductCard from "../components/Cards/ProductCard.vue";
-import { onMounted, ref, watchEffect } from "vue";
-import { useProductStore } from "../pinia/productStore.js";
-import { useRoute } from "vue-router";
-import Loader from "../components/Loader.vue";
-import NotFound from "../components/NotFound.vue";
-
-const route = useRoute();
-
-const showExports = ref(0);
-const storeProducts = useProductStore();
-
-watchEffect(async () => {
-  await storeProducts.fetchAllProducts(route.query);
-});
-
-onMounted(async () => {
-  storeProducts.setFilterParams(route.query);
-});
-
-const handleShowExports = (value) => {
-  if (value) {
-    showExports.value += 1;
-  } else showExports.value -= 1;
-};
-</script>
-
-<style scoped></style>

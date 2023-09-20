@@ -1,4 +1,22 @@
-<!-- eslint-disable vue/attribute-hyphenation -->
+<script setup>
+import RatingDetail from "./RatingDetail.vue";
+import StarComponentVue from "../StarComponent.vue";
+import { numberWithCommas } from "../../utilities/helperMethods.js";
+
+import { defineProps, ref } from "vue";
+import { vOnClickOutside } from "@vueuse/components";
+
+const { product } = defineProps({
+  product: { type: Object, required: true },
+});
+
+const ratingDetail = ref(false);
+
+const handleShowRatingDetails = (value) => {
+  ratingDetail.value = value;
+};
+</script>
+
 <template>
   <div class="w-[346px] h-[484px] px-[16px] py-[16px] bg-white">
     <div class="pb-[16px] border-b mb-[16px]">
@@ -53,21 +71,3 @@
     </div>
   </div>
 </template>
-<script setup>
-import { defineProps, ref } from "vue";
-import StarComponentVue from "../StarComponent.vue";
-import { numberWithCommas } from "../../utilities/helperMethods.js";
-import { vOnClickOutside } from "@vueuse/components";
-import RatingDetail from "./RatingDetail.vue";
-
-const ratingDetail = ref(false);
-
-const { product } = defineProps({
-  product: { type: Object, required: true },
-});
-
-const handleShowRatingDetails = (value) => {
-  ratingDetail.value = value;
-};
-</script>
-<style scoped></style>

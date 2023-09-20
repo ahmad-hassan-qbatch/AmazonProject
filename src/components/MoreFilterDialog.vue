@@ -1,16 +1,41 @@
-<!-- eslint-disable vue/attribute-hyphenation -->
+<script setup>
+import CheckBox from "./CheckBox.vue";
+import FilterFooter from "./FilterFooter.vue";
+import FilterHeader from "./FilterHeader.vue";
+import RangeFilter from "./RangeFilter.vue";
+import SelectOptions from "./SelectOptions.vue";
+
+import { Slider } from "ant-design-vue";
+import { defineProps } from "vue";
+import { useProductStore } from "../pinia/productStore";
+import { useRouter } from "vue-router";
+
+const { handleToggleFilter } = defineProps({
+  handleToggleFilter: { type: Function, required: true },
+});
+
+const router = useRouter();
+
+const storeProducts = useProductStore();
+
+const handleApplyFilters = () => {
+  router.push({ path: "/products", query: storeProducts.getFilterParams() });
+  handleToggleFilter(false);
+};
+</script>
+
 <template lang="">
   <div
     class="absolute top-[63px] bg-white z-10 w-[740px] rounded-[7px] shadow-[0px_4px_16px_0px_rgba(0,0,0,0.16)]"
   >
     <FilterHeader
       heading="All Filters"
-      :handleToggleFilter="handleToggleFilter"
+      :handle-toggle-filter="handleToggleFilter"
     />
 
     <div class="flex justify-between text-[14px]">
       <div class="w-1/2 pl-[24px] py-4 pr-4">
-        <RangeFilter title="Number of Reviews" paramsField="numberOfReviews" />
+        <RangeFilter title="Number of Reviews" params-field="numberOfReviews" />
         <div class="mb-[24px]">
           <p class="text-[#979797] text-[12px] font-semibold mb-[6px]">
             Average Review Rating
@@ -120,7 +145,7 @@
       </div>
 
       <div class="w-1/2 pr-[24px] py-4 pl-4">
-        <RangeFilter title="Price Range" paramsField="priceRange" />
+        <RangeFilter title="Price Range" params-field="priceRange" />
         <div class="mb-[24px]">
           <SelectOptions
             title="Last Active Seller"
@@ -128,7 +153,7 @@
             styles="text-[12px]"
           />
         </div>
-        <RangeFilter title="Product Weight (lbs)" paramsField="weightRange" />
+        <RangeFilter title="Product Weight (lbs)" params-field="weightRange" />
         <div class="-mt-[1px]">
           <SelectOptions
             title="Intellectual Property (IP) Status"
@@ -153,7 +178,7 @@
               ? storeProducts?.filterParams['hasVideo'] === 'true'
               : false
           "
-          :handleChangeCheck="
+          :handle-change-check="
             (isChecked) => {
               storeProducts.handleFiterParamsChange('hasVideo', isChecked);
             }
@@ -169,7 +194,7 @@
               ? storeProducts?.filterParams['hasVariations']
               : false
           "
-          :handleChangeCheck="
+          :handle-change-check="
             (isChecked) => {
               storeProducts.handleFiterParamsChange('hasVariations', isChecked);
             }
@@ -180,13 +205,13 @@
         <CheckBox
           label="Description has 4+ bullet points"
           styles="border-[#E9E9EA]"
-          paramsField="bulletsThreshold"
+          params-field="bulletsThreshold"
           :value="
             storeProducts?.filterParams['bulletsThreshold']
               ? storeProducts?.filterParams['bulletsThreshold']
               : false
           "
-          :handleChangeCheck="
+          :handle-change-check="
             (isChecked) => {
               storeProducts.handleFiterParamsChange(
                 'bulletsThreshold',
@@ -199,35 +224,11 @@
     </div>
 
     <FilterFooter
-      :handleToggleFilter="handleToggleFilter"
-      :handleApplyFilters="handleApplyFilters"
+      :handle-toggle-filter="handleToggleFilter"
+      :handle-apply-filters="handleApplyFilters"
     />
   </div>
 </template>
-<script setup>
-import { Slider } from "ant-design-vue";
-import { defineProps } from "vue";
-import CheckBox from "./CheckBox.vue";
-import RangeFilter from "./RangeFilter.vue";
-import { useRouter } from "vue-router";
-import SelectOptions from "./SelectOptions.vue";
-import FilterHeader from "./FilterHeader.vue";
-import FilterFooter from "./FilterFooter.vue";
-import { useProductStore } from "../pinia/productStore";
-
-const router = useRouter();
-
-const storeProducts = useProductStore();
-
-const { handleToggleFilter } = defineProps({
-  handleToggleFilter: { type: Function, required: true },
-});
-
-const handleApplyFilters = () => {
-  router.push({ path: "/products", query: storeProducts.getFilterParams() });
-  handleToggleFilter(false);
-};
-</script>
 
 <style scoped>
 select {

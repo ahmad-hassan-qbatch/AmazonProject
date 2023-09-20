@@ -1,8 +1,48 @@
 <!-- eslint-disable vue/attribute-hyphenation -->
+<script setup>
+import Button from "../Button.vue";
+import CheckBox from "../CheckBox.vue";
+import RatingDetail from "./RatingDetail.vue";
+import StarComponentVue from "../StarComponent.vue";
+
+import { defineProps, ref } from "vue";
+import { numberWithCommas } from "../../utilities/helperMethods.js";
+import { vOnClickOutside } from "@vueuse/components";
+
+const { product, handleShowExports } = defineProps({
+  product: { type: Object, required: true },
+  handleShowExports: { type: Function, required: true },
+});
+
+const ratingDetail = ref(false);
+
+const defaultData = {
+  image:
+    "https://s3-alpha-sig.figma.com/img/4317/a36f/f76deef6a57c602511e6ad3a14ba02ca?Expires=1695600000&Signature=HiPXoOK52W2lhVSWwP8gkqQgJe5CQwSdonwsiZtOsbpHU1rOWXdqCtWNnrpJkZuwq19GIevnoqOpdk2ADZ9DFo3~szT9p6CJzORDx~qSPqgbqubMUUrqVIYJWhYmbjPhcHWSKqMBuhWE3HTO-jz4XTJ5L8G2bkhNxb-myHgyB~dA84~AMcEvmV5Ct-dcYdIIxoX2Ofv3lm8-STMUSHJ1Rluqhx4BqlOWuRSivtUiV5O9rqw9i6eRiHhuI9h1hAsLqF~pwcy82pVYffEcph4MBo6jrz5qyKm7WuGEx~UDLw2izywmdDXJzw6Yfz4DETcz0LsvEGJ9gLV~sdZqxQLYkg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+  reviews: {
+    total: 0,
+    starPercentages: {
+      5: 0,
+      4: 0,
+      3: 0,
+      2: 0,
+      1: 0,
+    },
+  },
+  category: "Men's T-Shirts",
+  rank: "3",
+  TotalItems: "100",
+};
+
+const handleShowRatingDetails = (value) => {
+  ratingDetail.value = value;
+};
+</script>
+
 <template>
   <div class="w-[252px] px-[16px] py-[16px] bg-white">
     <div class="pb-[16px] border-b mb-[16px]">
-      <CheckBox :handleChangeCheck="handleShowExports" />
+      <CheckBox :handle-change-check="handleShowExports" />
 
       <img
         :src="product?.image || defaultData.image"
@@ -66,42 +106,3 @@
     >
   </div>
 </template>
-<script setup>
-import { defineProps, ref } from "vue";
-import CheckBox from "../CheckBox.vue";
-import StarComponentVue from "../StarComponent.vue";
-import { numberWithCommas } from "../../utilities/helperMethods.js";
-import { vOnClickOutside } from "@vueuse/components";
-import Button from "../Button.vue";
-import RatingDetail from "./RatingDetail.vue";
-
-const defaultData = {
-  image:
-    "https://s3-alpha-sig.figma.com/img/4317/a36f/f76deef6a57c602511e6ad3a14ba02ca?Expires=1695600000&Signature=HiPXoOK52W2lhVSWwP8gkqQgJe5CQwSdonwsiZtOsbpHU1rOWXdqCtWNnrpJkZuwq19GIevnoqOpdk2ADZ9DFo3~szT9p6CJzORDx~qSPqgbqubMUUrqVIYJWhYmbjPhcHWSKqMBuhWE3HTO-jz4XTJ5L8G2bkhNxb-myHgyB~dA84~AMcEvmV5Ct-dcYdIIxoX2Ofv3lm8-STMUSHJ1Rluqhx4BqlOWuRSivtUiV5O9rqw9i6eRiHhuI9h1hAsLqF~pwcy82pVYffEcph4MBo6jrz5qyKm7WuGEx~UDLw2izywmdDXJzw6Yfz4DETcz0LsvEGJ9gLV~sdZqxQLYkg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
-  reviews: {
-    total: 0,
-    starPercentages: {
-      5: 0,
-      4: 0,
-      3: 0,
-      2: 0,
-      1: 0,
-    },
-  },
-  category: "Men's T-Shirts",
-  rank: "3",
-  TotalItems: "100",
-};
-
-const ratingDetail = ref(false);
-
-const { product, handleShowExports } = defineProps({
-  product: { type: Object, required: true },
-  handleShowExports: { type: Function, required: true },
-});
-
-const handleShowRatingDetails = (value) => {
-  ratingDetail.value = value;
-};
-</script>
-<style scoped></style>
