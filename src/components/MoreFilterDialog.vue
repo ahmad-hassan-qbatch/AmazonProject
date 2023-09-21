@@ -1,33 +1,3 @@
-<script setup>
-import CheckBox from "./CheckBox.vue";
-import FilterFooter from "./FilterFooter.vue";
-import FilterHeader from "./FilterHeader.vue";
-import RangeFilter from "./RangeFilter.vue";
-import SelectOptions from "./SelectOptions.vue";
-
-import { Slider } from "ant-design-vue";
-import { defineProps } from "vue";
-import { useProductStore } from "../pinia/productStore";
-import { useRouter } from "vue-router";
-
-const { handleToggleFilter } = defineProps({
-  handleToggleFilter: { type: Function, required: true },
-});
-
-const router = useRouter();
-
-const storeProducts = useProductStore();
-
-const handleApplyFilters = () => {
-  router.push({
-    path: "/products",
-    query: { ...storeProducts.getFilterParams(), pageNo: 1 },
-  });
-
-  handleToggleFilter(false);
-};
-</script>
-
 <template lang="">
   <div
     class="absolute top-[63px] bg-white z-10 w-[740px] rounded-[7px] shadow-[0px_4px_16px_0px_rgba(0,0,0,0.16)]"
@@ -39,7 +9,11 @@ const handleApplyFilters = () => {
 
     <div class="flex justify-between text-[14px]">
       <div class="w-1/2 pl-[24px] py-4 pr-4">
-        <RangeFilter title="Number of Reviews" params-field="numberOfReviews" />
+        <RangeFilter
+          title="Number of Reviews"
+          params-field="numberOfReviews"
+          @update="handleFilterParamsChange"
+        />
         <div class="mb-[24px]">
           <p class="text-[#979797] text-[12px] font-semibold mb-[6px]">
             Average Review Rating
@@ -56,14 +30,7 @@ const handleApplyFilters = () => {
                 :max="5"
                 class="m-0"
                 :track-style="{ 'background-color': '#27C498' }"
-                @change="
-                  (value) => {
-                    storeProducts.handleFilterParamsChange(
-                      'averageReviewRating',
-                      value,
-                    );
-                  }
-                "
+                @change="(value) => updateAverageReviewRating(value)"
               />
             </div>
             <div class="flex justify-between text-[#031625] text-[12px]">
@@ -77,63 +44,15 @@ const handleApplyFilters = () => {
             Product Dimensions (in)
           </p>
           <div class="flex justify-between text-[14px]">
-            <input
-              type="text"
-              class="border border-[#E9E9EA] w-[97px] h-[36px] rounded px-[16px]"
-              placeholder="Length"
-              :value="
-                storeProducts?.filterParams['dimensions']
-                  ? storeProducts?.filterParams['dimensions'][0]
-                  : ''
-              "
-              @input="
-                (e) => {
-                  storeProducts.handleFilterParamsChange(
-                    'dimensions',
-                    e.target.value,
-                    0,
-                  );
-                }
-              "
-            />
-            <input
-              type="text"
-              class="border border-[#E9E9EA] w-[97px] h-[36px] rounded px-[16px]"
-              placeholder="Width"
-              :value="
-                storeProducts?.filterParams['dimensions']
-                  ? storeProducts?.filterParams['dimensions'][1]
-                  : ''
-              "
-              @input="
-                (e) => {
-                  storeProducts.handleFilterParamsChange(
-                    'dimensions',
-                    e.target.value,
-                    1,
-                  );
-                }
-              "
-            />
-            <input
-              type="text"
-              class="border border-[#E9E9EA] w-[97px] h-[36px] rounded px-[16px]"
-              placeholder="Height"
-              :value="
-                storeProducts?.filterParams['dimensions']
-                  ? storeProducts?.filterParams['dimensions'][2]
-                  : ''
-              "
-              @input="
-                (e) => {
-                  storeProducts.handleFilterParamsChange(
-                    'dimensions',
-                    e.target.value,
-                    2,
-                  );
-                }
-              "
-            />
+            <div v-for="(dimension, index) in filters.dimensions" :key="index">
+              <input
+                class="border border-[#E9E9EA] w-[97px] h-[36px] rounded px-[16px]"
+                type="text"
+                :placeholder="index"
+                :value="dimension"
+                @input="(e) => updateDimensions(e.target.value, index)"
+              />
+            </div>
           </div>
         </div>
 
@@ -149,7 +68,11 @@ const handleApplyFilters = () => {
       </div>
 
       <div class="w-1/2 pr-[24px] py-4 pl-4">
-        <RangeFilter title="Price Range" params-field="priceRange" />
+        <RangeFilter
+          title="Price Range"
+          params-field="priceRange"
+          @update="handleFilterParamsChange"
+        />
         <div class="mb-[24px]">
           <SelectOptions
             title="Last Active Seller"
@@ -157,7 +80,11 @@ const handleApplyFilters = () => {
             styles="text-[12px]"
           />
         </div>
-        <RangeFilter title="Product Weight (lbs)" params-field="weightRange" />
+        <RangeFilter
+          title="Product Weight (lbs)"
+          params-field="weightRange"
+          @update="handleFilterParamsChange"
+        />
         <div class="-mt-[1px]">
           <SelectOptions
             title="Intellectual Property (IP) Status"
@@ -176,56 +103,22 @@ const handleApplyFilters = () => {
       <div class="mb-[12px]">
         <CheckBox
           label="Listing has a video"
-          styles="border-[#E9E9EA]"
-          :value="
-            storeProducts?.filterParams['hasVideo']
-              ? storeProducts?.filterParams['hasVideo'] === 'true'
-              : false
-          "
-          :handle-change-check="
-            (isChecked) => {
-              storeProducts.handleFilterParamsChange('hasVideo', isChecked);
-            }
-          "
+          :value="filters.hasVideo"
+          @update:value="updateHasVideo"
         />
       </div>
       <div class="mb-[12px]">
         <CheckBox
           label="The product has variations"
-          styles="border-[#E9E9EA]"
-          :value="
-            storeProducts?.filterParams['hasVariations']
-              ? storeProducts?.filterParams['hasVariations']
-              : false
-          "
-          :handle-change-check="
-            (isChecked) => {
-              storeProducts.handleFilterParamsChange(
-                'hasVariations',
-                isChecked,
-              );
-            }
-          "
+          :value="filters.hasVariations"
+          @update:value="updateHasVariations"
         />
       </div>
       <div class="mb-[12px]">
         <CheckBox
           label="Description has 4+ bullet points"
-          styles="border-[#E9E9EA]"
-          params-field="bulletsThreshold"
-          :value="
-            storeProducts?.filterParams['bulletsThreshold']
-              ? storeProducts?.filterParams['bulletsThreshold']
-              : false
-          "
-          :handle-change-check="
-            (isChecked) => {
-              storeProducts.handleFilterParamsChange(
-                'bulletsThreshold',
-                isChecked,
-              );
-            }
-          "
+          :value="filters.bulletsThreshold"
+          @update:value="updateBulletThreshHold"
         />
       </div>
     </div>
@@ -236,6 +129,85 @@ const handleApplyFilters = () => {
     />
   </div>
 </template>
+
+<script setup>
+import CheckBox from "./CheckBox.vue";
+import FilterFooter from "./FilterFooter.vue";
+import FilterHeader from "./FilterHeader.vue";
+import RangeFilter from "./RangeFilter.vue";
+import SelectOptions from "./SelectOptions.vue";
+
+import { Slider } from "ant-design-vue";
+import { defineProps, ref } from "vue";
+import { useProductStore } from "../pinia/productStore";
+import { useRouter } from "vue-router";
+
+import { values } from "lodash";
+
+const { handleToggleFilter } = defineProps({
+  handleToggleFilter: { type: Function, required: true },
+});
+
+const router = useRouter();
+
+const storeProducts = useProductStore();
+
+const filters = ref({
+  hasVideo: storeProducts?.filterParams["hasVideo"],
+  bulletsThreshold: storeProducts?.filterParams["bulletsThreshold"],
+  hasVariations: storeProducts?.filterParams["hasVariations"],
+  dimensions: {
+    Length:
+      storeProducts?.filterParams["dimensions"] &&
+      storeProducts?.filterParams["dimensions"][0],
+    Width:
+      storeProducts?.filterParams["dimensions"] &&
+      storeProducts?.filterParams["dimensions"][1],
+    Height:
+      storeProducts?.filterParams["dimensions"] &&
+      storeProducts?.filterParams["dimensions"][2],
+  },
+  averageReviewRating: undefined,
+  priceRange: [null, null],
+  weightRange: Array(2).fill(null),
+  numberOfReviews: [null, null],
+});
+
+const handleApplyFilters = () => {
+  storeProducts.setFilterParams({
+    ...filters.value,
+    dimensions: values(filters.value.dimensions),
+  });
+
+  router.push({
+    path: "/products",
+    query: storeProducts.getFilterParams(),
+  });
+
+  handleToggleFilter(false);
+};
+
+const handleFilterParamsChange = (value, index, field) => {
+  filters.value[field][index] = value || undefined;
+};
+
+const updateDimensions = (value, index) => {
+  if (value) filters.value.dimensions[index] = value;
+  else filters.value.dimensions[index] = null;
+};
+
+const updateAverageReviewRating = (value) =>
+  (filters.value.averageReviewRating = value ? value : undefined);
+
+const updateHasVideo = (value) =>
+  (filters.value.hasVideo = value ? true : undefined);
+
+const updateHasVariations = (value) =>
+  (filters.value.hasVariations = value ? true : undefined);
+
+const updateBulletThreshHold = (value) =>
+  (filters.value.bulletsThreshold = value ? true : undefined);
+</script>
 
 <style scoped>
 select {

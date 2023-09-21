@@ -1,8 +1,15 @@
+/* eslint-disable no-undef */
 import api from "../utilities/api.js";
 import { defineStore } from "pinia";
-import { pick } from "lodash";
 import { ref } from "vue";
 import toast from "../utilities/toastMessages.js";
+
+const checkArrays = [
+  "weightRange",
+  "priceRange",
+  "numberOfReviews",
+  "dimensions",
+];
 
 export const useProductStore = defineStore("Product", () => {
   const products = ref([]);
@@ -23,7 +30,6 @@ export const useProductStore = defineStore("Product", () => {
 
       if (isSuccess(response.status)) {
         products.value = response.data.allProducts;
-
         totalPages.value = response.data.totalCount;
       }
       loading.value = false;
@@ -33,47 +39,27 @@ export const useProductStore = defineStore("Product", () => {
     }
   };
 
-  const handleFilterParamsChange = (field, value, index = null) => {
-    if (index === null) {
-      value
-        ? (filterParams.value[field] = value)
-        : delete filterParams.value[field];
-    } else {
-      if (!filterParams.value[field]) {
-        filterParams.value[field] = [];
-      }
-
-      filterParams.value[field][index] = value || undefined;
-    }
-  };
-
   const setFilterParams = (params) => {
     if (params === null) {
-      params = pick(filterParams.value, ["pageNo"]);
-
       filterParams.value = {
         ...params,
-        pageNo: filterParams.value.pageNo,
+        search: filterParams.value.search,
       };
       return;
     }
-    console.log(params);
+
+    delete params?.pageNo;
+
+    params.search = params?.search ? params?.search : filterParams.value.search;
+
     filterParams.value = {
       ...params,
     };
 
-    if (params["weightRange"])
-      filterParams.value.weightRange = params["weightRange"]?.split(",");
-
-    if (params["priceRange"])
-      filterParams.value.priceRange = params["priceRange"]?.split(",");
-
-    if (params["numberOfReviews"])
-      filterParams.value.numberOfReviews =
-        params["numberOfReviews"]?.split(",");
-
-    if (params["dimensions"])
-      filterParams.value.dimensions = params["dimensions"]?.split(",");
+    for (const value of checkArrays) {
+      typeof params[value] === typeof "" &&
+        (filterParams.value[value] = params[value]?.split(","));
+    }
   };
 
   const getFilterParams = () => {
@@ -84,19 +70,10 @@ export const useProductStore = defineStore("Product", () => {
       numberOfReviews: filterParams.value["numberOfReviews"]?.join(","),
       dimensions: filterParams.value["dimensions"]?.join(","),
     };
-
-    if (params?.weightRange?.length === 1) {
-      delete params?.weightRange;
-    }
-
-    if (params?.priceRange?.length === 1) {
-      delete params?.priceRange;
-    }
-    if (params?.numberOfReviews?.length === 1) {
-      delete params?.numberOfReviews;
-    }
-    if (params?.dimensions?.length === 1) {
-      delete params?.dimensions;
+    for (const value of checkArrays) {
+      if ((params[value]?.length === value) === "dimensions" ? 2 : 1) {
+        delete params[value];
+      }
     }
 
     return params;
@@ -109,7 +86,6 @@ export const useProductStore = defineStore("Product", () => {
     setFilterParams,
     filterParams,
     totalPages,
-    handleFilterParamsChange,
     getFilterParams,
   };
 });

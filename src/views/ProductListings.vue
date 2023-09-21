@@ -14,8 +14,7 @@ const showExports = ref(0);
 const storeProducts = useProductStore();
 
 watchEffect(async () => {
-  route.query.pageNo === undefined ? 1 : route.query.pageNo;
-  if (route.query.pageNo === undefined ? 1 : route.query.pageNo > 0) {
+  if (route.query.pageNo === undefined || route.query.pageNo > 0) {
     await storeProducts.fetchAllProducts(route.query);
   }
   storeProducts.setFilterParams(route.query);

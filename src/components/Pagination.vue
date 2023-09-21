@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import { defineProps, ref, watchEffect } from "vue";
+import { defineProps, onMounted, ref, watch } from "vue";
 
 import { range } from "lodash";
 
@@ -18,7 +18,7 @@ const currentPageState = ref(0);
 const startPage = ref(0);
 const endPage = ref(0);
 
-watchEffect(async () => {
+const calculateStartEnd = async () => {
   const pagesToShow = 2;
   currentPageState.value = currentPageProp;
 
@@ -33,6 +33,14 @@ watchEffect(async () => {
   } else if (currentPageState.value >= totalPages - pagesToShow) {
     startPage.value = Math.max(endPage.value - pagesToShow * 2, 1);
   }
+};
+
+onMounted(async () => {
+  calculateStartEnd();
+});
+
+watch(currentPageState, async () => {
+  calculateStartEnd();
 });
 </script>
 

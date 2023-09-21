@@ -1,31 +1,3 @@
-<script setup>
-import Button from "./Button.vue";
-import IconExports from "../assets/icons/IconExports.vue";
-import IconFilter from "../assets/icons/IconFilter.vue";
-import MoreFilterDialog from "./MoreFilterDialog.vue";
-import SelectOptions from "./SelectOptions.vue";
-
-import { defineProps } from "vue";
-import { ref } from "vue";
-import { useProductStore } from "../pinia/productStore";
-import { vOnClickOutside } from "@vueuse/components";
-
-import { omit } from "lodash";
-
-const { showExports } = defineProps({
-  showExports: { type: Number, default: 0 },
-});
-
-const storeProduct = useProductStore();
-
-const toggleMoreFilter = ref(false);
-
-const handleToggleFilter = (value) => {
-  toggleMoreFilter.value = value;
-  !value && storeProduct.setFilterParams(null);
-};
-</script>
-
 <template>
   <div id="buttons" class="flex">
     <div>
@@ -51,7 +23,7 @@ const handleToggleFilter = (value) => {
     </Button>
 
     <Button
-      v-if="JSON.stringify(omit($route.query, ['pageNo'])).length > 2"
+      v-if="JSON.stringify(omit($route.query, ['search', 'pageNo'])).length > 2"
       role="primary"
       styles="px-[16px] h-[40px] flex items-center"
       @click="
@@ -87,6 +59,34 @@ const handleToggleFilter = (value) => {
     />
   </div>
 </template>
+
+<script setup>
+import Button from "./Button.vue";
+import IconExports from "../assets/icons/IconExports.vue";
+import IconFilter from "../assets/icons/IconFilter.vue";
+import MoreFilterDialog from "./MoreFilterDialog.vue";
+import SelectOptions from "./SelectOptions.vue";
+
+import { defineProps } from "vue";
+import { ref } from "vue";
+import { useProductStore } from "../pinia/productStore";
+import { vOnClickOutside } from "@vueuse/components";
+
+import { omit } from "lodash";
+
+const { showExports } = defineProps({
+  showExports: { type: Number, default: 0 },
+});
+
+const storeProduct = useProductStore();
+
+const toggleMoreFilter = ref(false);
+
+const handleToggleFilter = (value) => {
+  toggleMoreFilter.value = value;
+  !value && storeProduct.setFilterParams(null);
+};
+</script>
 
 <style scoped>
 select {

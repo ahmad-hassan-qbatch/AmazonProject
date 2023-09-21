@@ -168,6 +168,5 @@ const config = {
 input[type="date"]::-webkit-calendar-picker-indicator {
   background-image: url("../../assets/icons/CalenderIcon.svg");
   background-repeat: no-repeat;
-  background-position: top 10px;
 }
 </style>

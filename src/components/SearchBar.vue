@@ -1,45 +1,3 @@
-<script setup>
-import FilterBox from "./SearchFilterBox.vue";
-
-import { ref, watch } from "vue";
-import { debounce } from "lodash";
-import { useProductStore } from "../pinia/productStore.js";
-import { useRouter } from "vue-router";
-import { vOnClickOutside } from "@vueuse/components";
-
-const router = useRouter();
-
-const category = ref("All");
-const searchInput = ref("");
-const toggleFilter = ref(false);
-const storeProduct = useProductStore();
-
-watch(searchInput, () => {
-  handleApplyFilters();
-});
-
-const handleCategoryClick = (value) => {
-  category.value = value;
-};
-
-const handleToggleFilter = (value) => {
-  toggleFilter.value = value;
-};
-
-const handleApplyFilters = debounce(() => {
-  if (searchInput.value)
-    router.push({
-      path: "/products",
-      query: { ...storeProduct.getFilterParams(), search: searchInput.value },
-    });
-  else
-    router.push({
-      path: "/products",
-      query: { ...storeProduct.getFilterParams() },
-    });
-}, 700);
-</script>
-
 <template>
   <FilterBox
     v-if="toggleFilter"
@@ -63,12 +21,53 @@ const handleApplyFilters = debounce(() => {
       <div class="flex w-96">
         <input
           v-model="searchInput"
-          type="text"
-          class="text-[#5A5F7D] bg-transparent w-full px-[16px] outline-none"
           placeholder="Search Products, Keywords, or ASINs"
+          class="text-[#5A5F7D] bg-transparent w-full px-[16px] outline-none"
+          type="text"
+          @input="handleApplyFilters"
         />
         <img src="../assets/icons/searchIcon.svg" alt="" />
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import FilterBox from "./SearchFilterBox.vue";
+
+import { ref, watchEffect } from "vue";
+import { debounce } from "lodash";
+import { useRouter, useRoute } from "vue-router";
+import { vOnClickOutside } from "@vueuse/components";
+
+const router = useRouter();
+const route = useRoute();
+
+const category = ref("All");
+const searchInput = ref();
+const toggleFilter = ref(false);
+
+watchEffect(async () => {
+  searchInput.value = route.query.search;
+});
+
+const handleCategoryClick = (value) => {
+  category.value = value;
+};
+
+const handleToggleFilter = (value) => {
+  toggleFilter.value = value;
+};
+
+const handleApplyFilters = debounce(() => {
+  if (searchInput.value)
+    router.push({
+      path: "/products",
+      query: { search: searchInput.value },
+    });
+  else
+    router.push({
+      path: "/products",
+    });
+}, 700);
+</script>
