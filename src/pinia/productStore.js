@@ -50,7 +50,7 @@ export const useProductStore = defineStore("Product", () => {
 
     delete params?.pageNo;
 
-    params.search = params?.search ? params?.search : filterParams.value.search;
+    //    params.search = params?.search ? params?.search : filterParams.value.search;
 
     filterParams.value = {
       ...params,
@@ -70,8 +70,9 @@ export const useProductStore = defineStore("Product", () => {
       numberOfReviews: filterParams.value["numberOfReviews"]?.join(","),
       dimensions: filterParams.value["dimensions"]?.join(","),
     };
+
     for (const value of checkArrays) {
-      if ((params[value]?.length === value) === "dimensions" ? 2 : 1) {
+      if (params[value]?.length === (value === "dimensions" ? 2 : 1)) {
         delete params[value];
       }
     }

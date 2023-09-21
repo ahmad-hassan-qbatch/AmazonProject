@@ -140,7 +140,7 @@ import SelectOptions from "./SelectOptions.vue";
 import { Slider } from "ant-design-vue";
 import { defineProps, ref } from "vue";
 import { useProductStore } from "../pinia/productStore";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 import { values } from "lodash";
 
@@ -149,6 +149,7 @@ const { handleToggleFilter } = defineProps({
 });
 
 const router = useRouter();
+const route = useRoute();
 
 const storeProducts = useProductStore();
 
@@ -176,9 +177,11 @@ const filters = ref({
 const handleApplyFilters = () => {
   storeProducts.setFilterParams({
     ...filters.value,
+    search: route.query.search,
     dimensions: values(filters.value.dimensions),
   });
 
+  console.log(storeProducts.getFilterParams());
   router.push({
     path: "/products",
     query: storeProducts.getFilterParams(),
