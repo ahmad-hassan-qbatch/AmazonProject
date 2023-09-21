@@ -13,6 +13,7 @@ const checkArrays = [
 
 export const useProductStore = defineStore("Product", () => {
   const products = ref([]);
+  const productDetails = ref({});
   const loading = ref(false);
   const totalPages = ref(0);
   const filterParams = ref({});
@@ -39,6 +40,18 @@ export const useProductStore = defineStore("Product", () => {
     }
   };
 
+  const fetchById = async (id, params) => {
+    try {
+      loading.value = true;
+      const res = await api.get(`/products/details/${id}`, { params: params });
+      productDetails.value = res.data.productDetails;
+      loading.value = false;
+    } catch (error) {
+      loading.value = false;
+      toast.error(error.message);
+    }
+  };
+
   const setFilterParams = (params) => {
     if (params === null) {
       filterParams.value = {
@@ -49,8 +62,6 @@ export const useProductStore = defineStore("Product", () => {
     }
 
     delete params?.pageNo;
-
-    //    params.search = params?.search ? params?.search : filterParams.value.search;
 
     filterParams.value = {
       ...params,
@@ -83,10 +94,12 @@ export const useProductStore = defineStore("Product", () => {
   return {
     products,
     loading,
+    fetchById,
     fetchAllProducts,
     setFilterParams,
     filterParams,
     totalPages,
     getFilterParams,
+    productDetails,
   };
 });

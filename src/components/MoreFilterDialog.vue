@@ -181,7 +181,6 @@ const handleApplyFilters = () => {
     dimensions: values(filters.value.dimensions),
   });
 
-  console.log(storeProducts.getFilterParams());
   router.push({
     path: "/products",
     query: storeProducts.getFilterParams(),

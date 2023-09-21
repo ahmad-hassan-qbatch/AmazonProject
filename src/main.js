@@ -31,7 +31,7 @@ const user = useUserStore();
 
 router.beforeEach((to, from, next) => {
   if (to.meta.authRequired) {
-    if (user.isAuthenticted()) {
+    if (user.isAuthenticated()) {
       next();
     } else {
       toast.warning("Please Login To Continue");
@@ -39,7 +39,7 @@ router.beforeEach((to, from, next) => {
     }
     return;
   } else if (to.name === "Login") {
-    if (user.isAuthenticted()) {
+    if (user.isAuthenticated()) {
       next({ name: "Dashboard" });
       return;
     }

@@ -26,7 +26,13 @@
           type="text"
           @input="handleApplyFilters"
         />
-        <img src="../assets/icons/searchIcon.svg" alt="" />
+        <button>
+          <img
+            src="../assets/icons/searchIcon.svg"
+            alt=""
+            @click="handleApplyFilters"
+          />
+        </button>
       </div>
     </div>
   </div>

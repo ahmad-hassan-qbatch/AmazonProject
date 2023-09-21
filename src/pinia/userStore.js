@@ -11,12 +11,15 @@ export const useUserStore = defineStore("user", () => {
 
   const isSuccess = (status) => status >= 200 && status <= 299;
 
-  const isAuthenticted = () => {
+  const isAuthenticated = () => {
     return Cookies.get("accessToken") !== undefined;
   };
 
   const getAccessToken = () => {
     return Cookies.get("accessToken");
+  };
+  const getUserId = () => {
+    return JSON.parse(Cookies.get("userData")).id;
   };
 
   const login = async (username, password) => {
@@ -30,7 +33,7 @@ export const useUserStore = defineStore("user", () => {
       if (isSuccess(response.status)) {
         if (response.data.token) {
           Cookies.set("accessToken", response.data.token);
-          user.value = response.data.user;
+          Cookies.set("userData", JSON.stringify(response.data.user));
         }
 
         toast.success(response.data.message);
@@ -44,8 +47,8 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const logout = () => {
-    user.value = null;
     Cookies.remove("accessToken");
+    Cookies.remove("userData");
     toast.success("Logged Out");
     router.push("/login");
   };
@@ -53,7 +56,8 @@ export const useUserStore = defineStore("user", () => {
   return {
     user,
     loading,
-    isAuthenticted,
+    isAuthenticated,
+    getUserId,
     logout,
     login,
     getAccessToken,

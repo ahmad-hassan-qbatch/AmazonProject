@@ -12,26 +12,32 @@ const { data } = defineProps({
       <h2 class="text-[#979797] text-[12px] my-[6px] font-semibold">
         Variations
       </h2>
-      <p class="text-[14px] font-normal">{{ data?.asin }}</p>
+
+      <p
+        class="text-[14px] font-normal overflow-x-auto whitespace-nowrap no-scrollbar"
+      >
+        {{ data?.asin.join(", ") }}
+      </p>
     </div>
     <div class="border-b border-[#EEEBEB] pb-4 mb-[10px]">
       <h2 class="text-[#979797] text-[12px] my-[6px] font-semibold">
         Attributes Variations
       </h2>
-      <div class="flex">
-        <p
-          v-for="(attributeVariation, index) in data?.attributeVariations"
+
+      <div class="flex overflow-x-auto whitespace-nowrap no-scrollbar">
+        <div
+          v-for="(attributes, index) in data?.attributeVariations"
           :key="index"
           :class="`text-[14px] font-normal ${
             index < data?.attributeVariations.length - 1 &&
             'border-r-[1.5px] border-[#C4C4C4]'
           } pr-[8px] mr-[8px]`"
         >
-          <span class="text-[#5A5F7D]">Color:</span>
-          {{ attributeVariation.Color }},
-          <span class="text-[#5A5F7D]">Size:</span>
-          {{ attributeVariation.Size }}
-        </p>
+          <p v-for="(attribute, aIndex) in attributes" :key="aIndex">
+            <span class="text-[#5A5F7D]">{{ attribute?.dimension }}: </span>
+            <span>{{ attribute?.value }}</span>
+          </p>
+        </div>
       </div>
     </div>
     <div class="flex justify-between">
@@ -47,7 +53,7 @@ const { data } = defineProps({
               index !== 'Height' && 'border-r-[1.5px] border-[#C4C4C4]'
             } pr-[8px] mr-[8px]`"
           >
-            <span class="text-[#5A5F7D]">{{ index }}:</span>
+            <span class="text-[#5A5F7D]">{{ index.replace("item", "") }}:</span>
             {{ item }} in
           </p>
         </div>

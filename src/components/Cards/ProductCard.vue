@@ -1,4 +1,78 @@
-<!-- eslint-disable vue/attribute-hyphenation -->
+<template>
+  <div class="w-[255px] px-[16px] py-[16px] bg-white">
+    <div class="pb-[16px] border-b mb-[16px]">
+      <CheckBox @update:value="handleShowExports" />
+
+      <img
+        :src="product?.image || defaultData.image"
+        alt="Product Image"
+        class="w-[220px] h-[125px] object-scale-down"
+      />
+    </div>
+
+    <div>
+      <router-link
+        :to="`/products/${product?.id}`"
+        class="text-[14px] mb-[6px] hover:text-[#27C498]"
+      >
+        <p class="line-clamp-2 h-[42px]">
+          {{ product?.title }}
+        </p>
+      </router-link>
+
+      <p class="text-[#979797] text-[12px] my-[6px] font-semibold">Price</p>
+      <p class="text-[#031625] text-[24px] mb-[6px]">${{ product?.price }}</p>
+    </div>
+
+    <p class="text-[#979797] text-[12px] my-[6px] font-semibold">Reviews</p>
+
+    <div class="flex items-center mb-[6px]">
+      <StarComponentVue :earned="product?.reviews" />
+      <div class="relative mt-1">
+        <button @click="() => handleShowRatingDetails(!ratingDetail)">
+          <img src="../../assets/icons/dropdown.svg" alt="" />
+        </button>
+
+        <div v-if="ratingDetail" class="absolute -right-36">
+          <RatingDetail
+            v-on-click-outside="() => handleShowRatingDetails(false)"
+            :rating="product?.reviews || defaultData.reviews"
+          />
+        </div>
+      </div>
+      <div>
+        <p class="text-[12px] text-[#27C498]">
+          {{
+            numberWithCommas(product?.reviews || defaultData?.reviews?.total)
+          }}
+        </p>
+      </div>
+    </div>
+
+    <h2 class="text-[#979797] text-[12px] my-[6px] font-semibold">BSR</h2>
+    <div class="flex items-center mb-[16px] break-words">
+      <p
+        class="flex items-center justify-center text-[12px] text-white bg-[#0FB600] rounded-[2px] px-1 h-[18px] mr-1"
+      >
+        #{{ product?.category_bsr }}
+      </p>
+      <p class="text-[14px] line-clamp-1">
+        in {{ product?.main_category_name }}
+
+        <span v-if="product?.bsr <= 100" class="text-[#27C498]">(Top 100)</span>
+      </p>
+    </div>
+    <router-link :to="`/products/${product?.id}`">
+      <Button
+        role="secondary"
+        styles="text-[14px] w-full hover:text-white hover:bg-[#27C498]"
+      >
+        View More Details
+      </Button>
+    </router-link>
+  </div>
+</template>
+
 <script setup>
 import Button from "../Button.vue";
 import CheckBox from "../CheckBox.vue";
@@ -38,74 +112,3 @@ const handleShowRatingDetails = (value) => {
   ratingDetail.value = value;
 };
 </script>
-
-<template>
-  <div class="w-[252px] px-[16px] py-[16px] bg-white">
-    <div class="pb-[16px] border-b mb-[16px]">
-      <CheckBox :handle-change-check="handleShowExports" />
-
-      <img
-        :src="product?.image || defaultData.image"
-        alt=""
-        class="w-[220px] h-[125px] object-scale-down"
-      />
-    </div>
-
-    <div>
-      <router-link
-        to="/products/1"
-        class="text-[14px] mb-[6px] hover:text-[#27C498]"
-      >
-        <p class="line-clamp-2">
-          {{ product?.title }}
-        </p>
-      </router-link>
-
-      <p class="text-[#979797] text-[12px] my-[6px] font-semibold">Price</p>
-      <p class="text-[#031625] text-[24px] mb-[6px]">${{ product?.price }}</p>
-    </div>
-
-    <p class="text-[#979797] text-[12px] my-[6px] font-semibold">Reviews</p>
-
-    <div class="flex items-center mb-[6px]">
-      <StarComponentVue :earned="product?.reviews" />
-      <button @click="() => handleShowRatingDetails(!ratingDetail)">
-        <img src="../../assets/icons/dropdown.svg" alt="" />
-      </button>
-
-      <p class="text-[12px] text-[#27C498]">
-        {{ numberWithCommas(product?.reviews || defaultData?.reviews?.total) }}
-      </p>
-    </div>
-
-    <div class="relative">
-      <div v-if="ratingDetail" class="absolute -right-[16px]">
-        <RatingDetail
-          v-on-click-outside="() => handleShowRatingDetails(false)"
-          :rating="product?.reviews || defaultData.reviews"
-        />
-      </div>
-    </div>
-    <h2 class="text-[#979797] text-[12px] my-[6px] font-semibold">BSR</h2>
-    <div class="flex items-center mb-[16px]">
-      <p
-        class="flex items-center justify-center text-[12px] text-white bg-[#0FB600] rounded-[2px] px-1 h-[18px] mr-1"
-      >
-        #{{ product?.category_bsr }}
-      </p>
-      <p class="text-[14px]">
-        in {{ product?.main_category_name }}
-
-        <span v-if="product?.bsr <= 100" class="text-[#27C498]">(Top 100)</span>
-      </p>
-    </div>
-    <router-link to="/products/1">
-      <Button
-        role="secondary"
-        styles="text-[14px] w-full hover:text-white hover:bg-[#27C498]"
-      >
-        View More Details
-      </Button>
-    </router-link>
-  </div>
-</template>
