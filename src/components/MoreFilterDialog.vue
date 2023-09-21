@@ -1,6 +1,6 @@
 <template lang="">
   <div
-    class="absolute top-[63px] bg-white z-10 w-[740px] rounded-[7px] shadow-[0px_4px_16px_0px_rgba(0,0,0,0.16)]"
+    class="absolute top-[63px] bg-white z-30 w-[740px] rounded-[7px] shadow-[0px_4px_16px_0px_rgba(0,0,0,0.16)]"
   >
     <FilterHeader
       heading="All Filters"

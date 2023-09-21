@@ -28,12 +28,11 @@
 
     <div class="flex items-center mb-[6px]">
       <StarComponentVue :earned="product?.reviews" />
+      <button @click="() => handleShowRatingDetails(!ratingDetail)">
+        <img src="../../assets/icons/dropdown.svg" alt="" />
+      </button>
       <div class="relative mt-1">
-        <button @click="() => handleShowRatingDetails(!ratingDetail)">
-          <img src="../../assets/icons/dropdown.svg" alt="" />
-        </button>
-
-        <div v-if="ratingDetail" class="absolute -right-36">
+        <div v-if="ratingDetail" class="absolute -right-36 top-2">
           <RatingDetail
             v-on-click-outside="() => handleShowRatingDetails(false)"
             :rating="product?.reviews || defaultData.reviews"
