@@ -2,6 +2,7 @@
 import { RouterLink } from "vue-router";
 import ProductListing from "../assets/icons/IconProductListing.vue";
 import DashboardIcon from "../assets/icons/DashboardIcon.vue";
+import { isElement } from "lodash";
 </script>
 
 <template lang="">
@@ -19,7 +20,9 @@ import DashboardIcon from "../assets/icons/DashboardIcon.vue";
     <router-link
       to="/products"
       :class="`flex pl-[24px] pt-[16px] text-[14px]
-       ${$route.name === 'Products' ? 'text-[#27C498]' : 'text-[#ADB4D2]'} `"
+       ${
+         $route.path.includes('products') ? 'text-[#27C498]' : 'text-[#ADB4D2]'
+       } `"
     >
       <div class="flex items-center">
         <ProductListing />

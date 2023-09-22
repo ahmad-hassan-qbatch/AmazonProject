@@ -1,18 +1,26 @@
 <template>
-  <FilterBox
-    v-if="toggleFilter"
-    v-on-click-outside="() => handleToggleFilter(false)"
-    :category="category"
-    :handle-category-click="handleCategoryClick"
-    :handle-toggle-filter="handleToggleFilter"
-  />
+  <div>
+    <div>
+      <FilterBox
+        v-if="toggleFilter"
+        v-click-outside="() => handleToggleFilter(false)"
+        :category="category"
+        :handle-category-click="handleCategoryClick"
+        :handle-toggle-filter="handleToggleFilter"
+      />
+    </div>
+  </div>
   <div class="min-w-[500px]">
     <div
       class="flex bg-white rounded-full items-center px-[16px] py-3 text-[14px]"
     >
       <button
         class="flex float-left items-center border-r border-[#9DA6C4] text-[#5A5F7D] pr-[16px]"
-        @click="() => handleToggleFilter(true)"
+        @click="
+          () => {
+            handleToggleFilter(!toggleFilter);
+          }
+        "
       >
         <span>{{ category }}</span>
         <img src="../assets/icons/dropdown.svg" class="ml-[12px]" alt="" />
@@ -44,7 +52,6 @@ import FilterBox from "./SearchFilterBox.vue";
 import { ref, watchEffect } from "vue";
 import { debounce } from "lodash";
 import { useRouter, useRoute } from "vue-router";
-import { vOnClickOutside } from "@vueuse/components";
 
 const router = useRouter();
 const route = useRoute();

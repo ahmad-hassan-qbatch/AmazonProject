@@ -54,7 +54,7 @@
     class="fixed top-0 left-0 ml-0 w-full h-full flex justify-center bg-black bg-opacity-50"
   >
     <MoreFilterDialog
-      v-on-click-outside="() => handleToggleFilter(false)"
+      v-click-outside="() => handleToggleFilter(false)"
       :handle-toggle-filter="handleToggleFilter"
     />
   </div>
@@ -70,7 +70,6 @@ import SelectOptions from "./SelectOptions.vue";
 import { defineProps } from "vue";
 import { ref } from "vue";
 import { useProductStore } from "../pinia/productStore";
-import { vOnClickOutside } from "@vueuse/components";
 
 import { omit } from "lodash";
 

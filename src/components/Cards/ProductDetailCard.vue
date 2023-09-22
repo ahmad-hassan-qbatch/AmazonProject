@@ -24,7 +24,7 @@
           </button>
           <div v-if="ratingDetail" class="absolute -right-36">
             <RatingDetail
-              v-on-click-outside="() => handleShowRatingDetails(false)"
+              v-click-outside="() => handleShowRatingDetails(false)"
               :rating="product?.reviews || defaultData.reviews"
             />
           </div>
@@ -63,7 +63,6 @@ import StarComponentVue from "../StarComponent.vue";
 import { numberWithCommas } from "../../utilities/helperMethods.js";
 
 import { defineProps, ref } from "vue";
-import { vOnClickOutside } from "@vueuse/components";
 
 const { product } = defineProps({
   product: { type: Object, required: true },

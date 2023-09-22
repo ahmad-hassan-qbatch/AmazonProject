@@ -9,6 +9,7 @@ import { createPinia } from "pinia";
 import router from "./router";
 import toast from "./utilities/toastMessages";
 import { useUserStore } from "./pinia/userStore";
+import vClickOutside from "click-outside-vue3";
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -26,6 +27,7 @@ app.use(Toast, {
 app.use(pinia);
 app.use(Antd);
 app.use(router);
+app.use(vClickOutside);
 
 const user = useUserStore();
 
