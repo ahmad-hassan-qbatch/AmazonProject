@@ -131,18 +131,19 @@
 </template>
 
 <script setup>
+import { defineProps, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
+import { Slider } from "ant-design-vue";
+import { values } from "lodash";
+
 import CheckBox from "./CheckBox.vue";
 import FilterFooter from "./FilterFooter.vue";
 import FilterHeader from "./FilterHeader.vue";
 import RangeFilter from "./RangeFilter.vue";
 import SelectOptions from "./SelectOptions.vue";
 
-import { Slider } from "ant-design-vue";
-import { defineProps, ref } from "vue";
 import { useProductStore } from "../pinia/productStore";
-import { useRouter, useRoute } from "vue-router";
-
-import { values } from "lodash";
 
 const { handleToggleFilter } = defineProps({
   handleToggleFilter: { type: Function, required: true },

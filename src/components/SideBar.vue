@@ -1,10 +1,3 @@
-<script setup>
-import { RouterLink } from "vue-router";
-import ProductListing from "../assets/icons/IconProductListing.vue";
-import DashboardIcon from "../assets/icons/DashboardIcon.vue";
-import { isElement } from "lodash";
-</script>
-
 <template lang="">
   <aside class="flex flex-col w-[220px] bg-white min-h-screen">
     <router-link
@@ -32,4 +25,8 @@ import { isElement } from "lodash";
   </aside>
 </template>
 
-<style lang=""></style>
+<script setup>
+import { RouterLink } from "vue-router";
+import ProductListing from "../assets/icons/IconProductListing.vue";
+import DashboardIcon from "../assets/icons/DashboardIcon.vue";
+</script>

@@ -1,7 +1,9 @@
 <script setup>
+import { defineProps, ref } from "vue";
+
 import FilterHeader from "./FilterHeader.vue";
 import FilterFooter from "./FilterFooter.vue";
-import { defineProps, ref } from "vue";
+
 import categories from "../utilities/categories";
 
 const { handleToggleFilter, category, handleCategoryClick } = defineProps({

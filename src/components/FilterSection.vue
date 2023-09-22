@@ -61,17 +61,17 @@
 </template>
 
 <script setup>
+import { defineProps, ref } from "vue";
+import { omit } from "lodash";
+
 import Button from "./Button.vue";
-import IconExports from "../assets/icons/IconExports.vue";
-import IconFilter from "../assets/icons/IconFilter.vue";
 import MoreFilterDialog from "./MoreFilterDialog.vue";
 import SelectOptions from "./SelectOptions.vue";
 
-import { defineProps } from "vue";
-import { ref } from "vue";
-import { useProductStore } from "../pinia/productStore";
+import IconExports from "../assets/icons/IconExports.vue";
+import IconFilter from "../assets/icons/IconFilter.vue";
 
-import { omit } from "lodash";
+import { useProductStore } from "../pinia/productStore";
 
 const { showExports } = defineProps({
   showExports: { type: Number, default: 0 },

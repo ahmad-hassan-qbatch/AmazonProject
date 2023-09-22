@@ -58,11 +58,12 @@
 </template>
 
 <script setup>
+import { defineProps, ref } from "vue";
+
 import RatingDetail from "./RatingDetail.vue";
 import StarComponentVue from "../StarComponent.vue";
-import { numberWithCommas } from "../../utilities/helperMethods.js";
 
-import { defineProps, ref } from "vue";
+import { numberWithCommas } from "../../utilities/helperMethods.js";
 
 const { product } = defineProps({
   product: { type: Object, required: true },

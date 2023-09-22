@@ -1,11 +1,3 @@
-<script setup>
-import { defineProps } from "vue";
-
-const { data } = defineProps({
-  data: { type: Object, required: true },
-});
-</script>
-
 <template lang="">
   <div>
     <div class="border-b border-[#EEEBEB] pb-4 mb-[10px]">
@@ -81,3 +73,11 @@ const { data } = defineProps({
     </div>
   </div>
 </template>
+
+<script setup>
+import { defineProps } from "vue";
+
+const { data } = defineProps({
+  data: { type: Object, required: true },
+});
+</script>

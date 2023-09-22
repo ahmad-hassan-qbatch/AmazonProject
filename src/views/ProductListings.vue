@@ -42,14 +42,16 @@
 </template>
 
 <script setup>
-import FilterSection from "../components/FilterSection.vue";
-import ProductCard from "../components/Cards/ProductCard.vue";
 import { ref, watchEffect } from "vue";
-import { useProductStore } from "../pinia/productStore.js";
 import { useRoute } from "vue-router";
+
 import Loader from "../components/Loader.vue";
 import NotFound from "../components/NotFound.vue";
 import Pagination from "../components/Pagination.vue";
+import FilterSection from "../components/FilterSection.vue";
+import ProductCard from "../components/Cards/ProductCard.vue";
+
+import { useProductStore } from "../pinia/productStore.js";
 
 const route = useRoute();
 

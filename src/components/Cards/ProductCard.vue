@@ -73,12 +73,13 @@
 </template>
 
 <script setup>
+import { defineProps, ref } from "vue";
+
 import Button from "../Button.vue";
 import CheckBox from "../CheckBox.vue";
 import RatingDetail from "./RatingDetail.vue";
 import StarComponentVue from "../StarComponent.vue";
 
-import { defineProps, ref } from "vue";
 import { numberWithCommas } from "../../utilities/helperMethods.js";
 
 const { product, handleShowExports } = defineProps({

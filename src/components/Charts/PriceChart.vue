@@ -25,9 +25,9 @@
 </template>
 
 <script setup>
-import { Line } from "vue-chartjs";
-import Button from "../Button.vue";
 import { ref, watch } from "vue";
+import { Line } from "vue-chartjs";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -39,6 +39,8 @@ import {
   Legend,
   Filler,
 } from "chart.js";
+
+import Button from "../Button.vue";
 
 const startDate = ref();
 const endDate = ref();

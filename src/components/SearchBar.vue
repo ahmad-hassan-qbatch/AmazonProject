@@ -47,11 +47,12 @@
 </template>
 
 <script setup>
-import FilterBox from "./SearchFilterBox.vue";
-
 import { ref, watchEffect } from "vue";
-import { debounce } from "lodash";
 import { useRouter, useRoute } from "vue-router";
+
+import { debounce } from "lodash";
+
+import FilterBox from "./SearchFilterBox.vue";
 
 const router = useRouter();
 const route = useRoute();

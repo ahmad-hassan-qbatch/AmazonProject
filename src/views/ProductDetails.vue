@@ -104,20 +104,20 @@
 </template>
 
 <script setup>
-import IconBackArrow from "../assets/icons/IconBackArrow.vue";
 import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+
 import ProductDetailCard from "../components/Cards/ProductDetailCard.vue";
 import ProductActions from "../components/ProductActions.vue";
 import NotFound from "../components/NotFound.vue";
 import ProductVariation from "../components/ProductVariation.vue";
 import PriceChart from "../components/Charts/PriceChart.vue";
-import { useRoute } from "vue-router";
 import Loader from "../components/Loader.vue";
+
+import IconBackArrow from "../assets/icons/IconBackArrow.vue";
 
 import { useProductStore } from "../pinia/productStore.js";
 import { useUserStore } from "../pinia/userStore.js";
-
-// import { flatten } from "lodash";
 
 const route = useRoute();
 
@@ -128,33 +128,4 @@ const selectedSection = ref(0);
 onMounted(() => {
   storeProducts.fetchById(route.params.id, { userId: storeUser.getUserId() });
 });
-const product = {
-  name: "Amazon Essentials Men's Short Sleeve Crew neck T-Shirt",
-  image:
-    "https://s3-alpha-sig.figma.com/img/4317/a36f/f76deef6a57c602511e6ad3a14ba02ca?Expires=1695600000&Signature=HiPXoOK52W2lhVSWwP8gkqQgJe5CQwSdonwsiZtOsbpHU1rOWXdqCtWNnrpJkZuwq19GIevnoqOpdk2ADZ9DFo3~szT9p6CJzORDx~qSPqgbqubMUUrqVIYJWhYmbjPhcHWSKqMBuhWE3HTO-jz4XTJ5L8G2bkhNxb-myHgyB~dA84~AMcEvmV5Ct-dcYdIIxoX2Ofv3lm8-STMUSHJ1Rluqhx4BqlOWuRSivtUiV5O9rqw9i6eRiHhuI9h1hAsLqF~pwcy82pVYffEcph4MBo6jrz5qyKm7WuGEx~UDLw2izywmdDXJzw6Yfz4DETcz0LsvEGJ9gLV~sdZqxQLYkg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
-  price: 20.0,
-  rating: {
-    accumulative: 4,
-    total: 45235,
-    starPercentages: {
-      5: 70,
-      4: 16,
-      3: 8,
-      2: 3,
-      1: 3,
-    },
-  },
-  attributeVariations: [
-    { Color: "Red", Size: "Small" },
-    { Color: "Black", Size: "Medium" },
-    { Color: "Grey", Size: "Large" },
-  ],
-  dimensions: { Length: 23, Width: 23, Height: 23 },
-  demand: 4,
-  weight: 0.6,
-  asin: "B0BSXS7NDG, C0VSXS7NDG, L0ACVK7NDG, P0BSXS7NDG, G1VSXS7NDG, J0BSXS7NDG",
-  category: "Men's T-Shirts",
-  rank: "3",
-  TotalItems: "100",
-};
 </script>

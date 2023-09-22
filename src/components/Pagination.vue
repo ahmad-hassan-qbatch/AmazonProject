@@ -1,49 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
-<script setup>
-import { defineProps, onMounted, ref, watch } from "vue";
-
-import { range } from "lodash";
-
-const {
-  currentPage: currentPageProp,
-  totalPages,
-  handlePageNoClick,
-} = defineProps({
-  currentPage: { type: Number, required: true },
-  totalPages: { type: Number, required: true },
-  handlePageNoClick: { type: Function, required: true },
-});
-
-const currentPageState = ref(0);
-const startPage = ref(0);
-const endPage = ref(0);
-
-const calculateStartEnd = async () => {
-  const pagesToShow = 2;
-  currentPageState.value = currentPageProp;
-
-  if (currentPageState.value > totalPages || currentPageState.value < 1) {
-    currentPageState.value = 0;
-  }
-  startPage.value = Math.max(currentPageState.value - pagesToShow, 1);
-  endPage.value = Math.min(currentPageState.value + pagesToShow, totalPages);
-
-  if (currentPageState.value <= pagesToShow) {
-    endPage.value = Math.min(startPage.value + pagesToShow * 2, totalPages);
-  } else if (currentPageState.value >= totalPages - pagesToShow) {
-    startPage.value = Math.max(endPage.value - pagesToShow * 2, 1);
-  }
-};
-
-onMounted(async () => {
-  calculateStartEnd();
-});
-
-watch(currentPageState, async () => {
-  calculateStartEnd();
-});
-</script>
-
 <template lang="">
   <div
     className="mr-0 mt-5 flex flex-col items-center justify-center pb-10 sm:items-end"
@@ -131,3 +85,49 @@ watch(currentPageState, async () => {
     </span>
   </div>
 </template>
+
+<!-- eslint-disable vue/multi-word-component-names -->
+<script setup>
+import { defineProps, onMounted, ref, watch } from "vue";
+
+import { range } from "lodash";
+
+const {
+  currentPage: currentPageProp,
+  totalPages,
+  handlePageNoClick,
+} = defineProps({
+  currentPage: { type: Number, required: true },
+  totalPages: { type: Number, required: true },
+  handlePageNoClick: { type: Function, required: true },
+});
+
+const currentPageState = ref(0);
+const startPage = ref(0);
+const endPage = ref(0);
+
+const calculateStartEnd = async () => {
+  const pagesToShow = 2;
+  currentPageState.value = currentPageProp;
+
+  if (currentPageState.value > totalPages || currentPageState.value < 1) {
+    currentPageState.value = 0;
+  }
+  startPage.value = Math.max(currentPageState.value - pagesToShow, 1);
+  endPage.value = Math.min(currentPageState.value + pagesToShow, totalPages);
+
+  if (currentPageState.value <= pagesToShow) {
+    endPage.value = Math.min(startPage.value + pagesToShow * 2, totalPages);
+  } else if (currentPageState.value >= totalPages - pagesToShow) {
+    startPage.value = Math.max(endPage.value - pagesToShow * 2, 1);
+  }
+};
+
+onMounted(async () => {
+  calculateStartEnd();
+});
+
+watch(currentPageState, async () => {
+  calculateStartEnd();
+});
+</script>

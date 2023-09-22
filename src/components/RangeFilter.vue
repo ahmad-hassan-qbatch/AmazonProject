@@ -24,6 +24,7 @@
 
 <script setup>
 import { defineProps, defineEmits, ref, onMounted } from "vue";
+
 import { useProductStore } from "../pinia/productStore";
 
 const { title, paramsField } = defineProps({
